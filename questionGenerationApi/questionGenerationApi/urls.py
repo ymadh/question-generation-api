@@ -20,9 +20,12 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'questions', views.QuestionViewSet)
-
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('<int:question_id>/', views.detail, name='detail'),
+    path('generate/', views.generate, name='generate'),
+    
+
 ]
