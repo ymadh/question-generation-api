@@ -1,0 +1,36 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "294b33639cd4997072572cf829df49d63227e3219e81cae428b4c808896b8997"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.10"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "pydealer": {
+            "hashes": [
+                "sha256:44bc46baef18bf33f884840eda2098c4741e662e9efe95449aed07c553d81dcf"
+            ],
+            "index": "pypi",
+            "version": "==1.4.0"
+        }
+    },
+    "develop": {
+        "pydealer": {
+            "hashes": [
+                "sha256:44bc46baef18bf33f884840eda2098c4741e662e9efe95449aed07c553d81dcf"
+            ],
+            "index": "pypi",
+            "version": "==1.4.0"
+        }
+    }
+}

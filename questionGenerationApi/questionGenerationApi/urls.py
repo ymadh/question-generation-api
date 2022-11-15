@@ -20,6 +20,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'questions', views.QuestionViewSet)
+router.register(r'questions/generate', views.generate)
 
 urlpatterns = [
     path('', include(router.urls)),
