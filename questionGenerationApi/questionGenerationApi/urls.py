@@ -16,14 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from . import views
+from .views import generate, QuestionViewSet
 
 router = routers.DefaultRouter()
-router.register(r'questions', views.QuestionViewSet)
-router.register(r'questions/generate', views.generate)
+router.register(r'questions', QuestionViewSet)
+#router.register(r'questions/generate', generate)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('questions/generate', generate),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
