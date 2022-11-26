@@ -5,6 +5,8 @@ from collections import Counter
 
 # https://en.wikipedia.org/wiki/Poker_probability#5-card_poker_hands
 
+# todo: figure out these calculations for storing the answers :/
+
 
 def calc_two_of_a_kind():
     return ((13/1)*(4/2)*(12/3)*(4/1)*(4/1)*(4/1))
