@@ -31,13 +31,16 @@ def generate(request):
 
 def returnQuestions(request, numQuestions):
     questions = Question.objects.all()
-    numQuestionsVar = numQuestions
-    print(f'numQuestions: {numQuestionsVar}')
     difficulty = request.GET['difficulty']
     print(f'difficulty recieved: {difficulty}')
     questionText=[]
     newQuestionsTemplate = Template('question : $questionText -> answer: $answer')
+    count = 0
     for q in questions:
+
+        if count == numQuestions:
+            continue
+        count += 1
         questionString=newQuestionsTemplate.substitute(questionText=q.questionText,answer=q.answer) 
         print(newQuestionsTemplate.substitute(questionText=q.questionText,answer=q.answer))
         questionText.append(questionString)
