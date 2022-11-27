@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('<int:question_id>/', views.detail, name='detail'),
+    path('<uuid:question_id>/', views.detail, name='detail'), #I changed this to uuid, which is what we have now.  It may be better if we use an int and assign a value.
     path('generate/', views.generate, name='generate'),
     
 
