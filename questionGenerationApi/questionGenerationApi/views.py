@@ -8,7 +8,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from string import Template
 
-from .utils import multipleCards, singleCard, singleCardNumberOnly
+from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly
 
 from .serializers import QuestionSerializer
 from .models import Question
@@ -46,6 +46,8 @@ def generate(request):
     # ex: probabiliy of 3 7's in a 5 card draw
     multipleCards(deck)
 
+    # AAA QQ
+    fullhouse(deck)
     # latest_question_list = Question.objects.order_by('-id')[:5]
     # output = ', '.join([q.question_text for q in latest_question_list])
     return HttpResponse("OK")

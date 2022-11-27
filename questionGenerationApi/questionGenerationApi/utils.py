@@ -64,6 +64,7 @@ def singleCard(deck):
         usedDeck = remove_items(usedDeck, draw, 'numberAndSuite')
 
 
+# of a kind... type questions
 def multipleCards(deck):
     usedDeck = deck.copy()
     for numCards in range(2, 4):
@@ -83,3 +84,28 @@ def multipleCards(deck):
             saveNewQuestion(q)
             # add to a used list so we dont repeat
             usedDeck = remove_items(usedDeck, draw, 'numberAndSuite')
+
+
+# todo: randomize the draw 1,2,3 and 4,5 for types of suites drawn
+# this will add a lot
+def fullhouse(deck):
+    # chances of getting a certain card and suite (should be 1/52)
+    # start again
+    usedDeck = deck.copy()
+    for i in range(10):
+        # could add more variability here
+        draw1 = usedDeck[i]
+        draw2 = usedDeck[i+1]
+        draw3 = usedDeck[i+2]
+        usedDeck = remove_items(usedDeck, draw1[0], 'numberOnly')
+        for j in range(i+1, 11):
+            # could add more variability here
+            draw4 = usedDeck[j]
+            draw5 = usedDeck[j+1]
+            q = Question()
+            q.name = "Full House"
+            q.questionText = f'What are the chances of drawing {draw1} {draw2} {draw3} {draw4} {draw5}'
+            q.answer = 0.001441
+            q.difficulty = 5
+            q.numInputs = 0
+            saveNewQuestion(q)
