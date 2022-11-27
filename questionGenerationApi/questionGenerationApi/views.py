@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
-
+from string import Template
 from .serializers import QuestionSerializer
 from .models import Question
 
@@ -28,3 +28,22 @@ def generate(request):
     latest_question_list = Question.objects.order_by('-id')[:5]
     output = ', '.join([q.question_text for q in latest_question_list])
     return HttpResponse(output)
+
+def returnQuestions(request, numQuestions):
+    questions = Question.objects.all()
+    difficulty = request.GET['difficulty']
+    print(f'difficulty recieved: {difficulty}')
+    questionText=[]
+    newQuestionsTemplate = Template('question : $questionText -> answer: $answer')
+    count = 0
+    for q in questions:
+
+        if count == numQuestions:
+            continue
+        count += 1
+        questionString=newQuestionsTemplate.substitute(questionText=q.questionText,answer=q.answer) 
+        print(newQuestionsTemplate.substitute(questionText=q.questionText,answer=q.answer))
+        questionText.append(questionString)
+    responseQuestions = '\n'.join(questionText)
+    print(responseQuestions)
+    return HttpResponse(responseQuestions, content_type='text/plain')
