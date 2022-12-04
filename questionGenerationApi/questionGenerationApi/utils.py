@@ -74,11 +74,11 @@ def multipleCards(deck):
             q.name = "Multiple Card"
             q.questionText = f'What are the chances of drawing {numCards} {draw[0]}\'s from a 5 card draw'
             if (numCards == 2):
-                q.answer = 42.25
+                q.answer = .42
             elif (numCards == 3):
-                q.answer = 2.11
+                q.answer = .2
             elif (numCards == 4):
-                q.answer = 0.024
+                q.answer = 0.02
             q.difficulty = numCards  # two of a kind is easier than 4 of a kind
             q.numInputs = 0
             saveNewQuestion(q)
@@ -106,7 +106,7 @@ def fullhouse(deck):
             q.name = "Full House"
             q.questionText = f'What are the chances of drawing {draw1} {draw2} {draw3} {draw4} {draw5}'
             q.answer = 0.001441
-            q.difficulty = 5
+            q.difficulty = 6
             q.numInputs = 0
             saveNewQuestion(q)
 
