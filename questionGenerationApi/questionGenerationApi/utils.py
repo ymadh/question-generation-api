@@ -109,3 +109,16 @@ def fullhouse(deck):
             q.difficulty = 5
             q.numInputs = 0
             saveNewQuestion(q)
+
+
+def colorOrNumber(numbers, color):
+    for i in range(len(numbers)):
+        for j in range(len(color)):
+            q = Question()
+            q.name = "Simple OR"
+            q.questionText = f'What are the chances of drawing either {color[j]} or {numbers[i]}'
+            # 26 + 4 - 2 = 28
+            q.answer = 0.54
+            q.difficulty = 5
+            q.numInputs = 0
+            saveNewQuestion(q)

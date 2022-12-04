@@ -8,15 +8,18 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from string import Template
 
-from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly
+from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly, colorOrNumber
 
 from .serializers import QuestionSerializer
 from .models import Question
 
 
+numbers = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+suites = ['Spade', 'Heart', 'Diamond', 'Club']
+color = ['Red', 'Black']
+
 # make a deck of cards
-deck = list(itertools.product(['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'],
-                              ['Spade', 'Heart', 'Diamond', 'Club']))
+deck = list(itertools.product(numbers, suites))
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -48,6 +51,10 @@ def generate(request):
 
     # AAA QQ
     fullhouse(deck)
+
+    # combinatorics
+    # color OR number
+    colorOrNumber(numbers, color)
     # latest_question_list = Question.objects.order_by('-id')[:5]
     # output = ', '.join([q.question_text for q in latest_question_list])
     return HttpResponse("OK")
