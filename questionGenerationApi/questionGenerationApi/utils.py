@@ -86,11 +86,11 @@ def multipleCards(deck):
             q.name = "Multiple Card"
             q.questionText = f'What are the chances of drawing {numCards} {draw[0]}\'s from a 5 card draw?'
             if (numCards == 2):
-                q.answer = PHF.calc_two_of_a_kind/PHF.calc_all_possible
+                q.answer = calc_two_of_a_kind/calc_all_possible
             elif (numCards == 3):
-                q.answer = PHF.calc_three_of_a_kind/PHF.calc_all_possible
+                q.answer = calc_three_of_a_kind/calc_all_possible
             elif (numCards == 4):
-                q.answer = PHF.calc_four_of_a_kind/PHF.calc_all_possible
+                q.answer = calc_four_of_a_kind/calc_all_possible
             q.difficulty = numCards  # two of a kind is easier than 4 of a kind
             q.numInputs = 0
             saveNewQuestion(q)
@@ -117,7 +117,7 @@ def fullhouse(deck):
             q = Question()
             q.name = "Full House"
             q.questionText = f'What are the chances of drawing {draw1} {draw2} {draw3} {draw4} {draw5}?'
-            q.answer = PHF.calc_full_house/PHF.calc_all_possible
+            q.answer = calc_full_house/calc_all_possible
             q.difficulty = 6
             q.numInputs = 0
             saveNewQuestion(q)
@@ -151,7 +151,7 @@ def onePair(deck):
     q = Question()
     q.name = "One Pair"
     q.questionText = f'What are the chances of drawing {draw1} {draw2} {draw3} {draw4} {draw5}?'
-    q.answer = PHF.calc_one_pair/PHF.calc_all_possible
+    q.answer = calc_one_pair/calc_all_possible
     q.difficulty = 4
     q.numInputs = 0
     saveNewQuestion(q)
@@ -189,7 +189,7 @@ def twoPair(deck):
     q = Question()
     q.name = "Two Pair"
     q.questionText = f'What are the chances of drawing {draw1} {draw2} {draw3} {draw4} {draw5}?'
-    q.answer = PHF.calc_two_pair/PHF.calc_all_possible
+    q.answer = calc_two_pair/calc_all_possible
     q.difficulty = 5
     q.numInputs = 0
     saveNewQuestion(q)
@@ -220,7 +220,7 @@ def twoPairs(deck):
         q = Question()
         q.name = "Two Pair"
         q.questionText = f'What are the chances of drawing {hand[0]} {hand[1]} {hand[2]} {hand[3]} {hand[4]}?'
-        q.answer = PHF.calc_two_pair/PHF.calc_all_possible
+        q.answer = calc_two_pair/calc_all_possible
         q.difficulty = 5
         q.numInputs = 0
         saveNewQuestion(q)
