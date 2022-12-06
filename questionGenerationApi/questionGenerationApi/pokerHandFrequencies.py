@@ -1,67 +1,67 @@
 from math import comb, pow
 
 ##################### START Poker Hand Frequencies ########################
-def calc_all_possible():
+def calcAllPossible():
     return comb(52, 5)
 
 # Two of a Kind = One Pair
 '''START N KIND'''
-def calc_two_of_a_kind():
+def calcTwoOfAKind():
     return (
         comb(13, 1)* comb(4, 2)* comb(12, 3)* pow(comb(4, 1), 3)
     )
 
 
-def calc_three_of_a_kind():
+def calcThreeOfAKind():
     return (
         comb(13, 1) * comb(4, 3) * comb(11, 1) * pow(comb(4, 1), 2)
     )
 
 
-def calc_four_of_a_kind():
+def calcFourOfAKind():
     return (
         comb(13, 1) * comb(4, 4) * comb(12, 1) * comb(4, 1)
     )
 '''END N KIND'''
 ###
 '''START FLUSH'''   
-def calc_royal_flush():
+def calcRoyalFlush():
     return (
         comb(4, 1)
     )
-def calc_straight_flush():
+def calcStraightFlush():
     return (
         (comb(10, 1) * comb(4, 1)) - comb(4, 1)
     )
     
-def calc_flush():
+def calcFlush():
     return (
         (comb(13, 5) * comb(4, 1)) - (comb(10, 1) * comb(4, 1))
     )
 '''END FLUSH'''
 ###
 '''START PAIR'''
-def calc_one_pair():
+def calcOnePair():
     return (
-        calc_two_of_a_kind()
+        calcTwoOfAKind()
     )
-def calc_two_pair():
+def calcTwoPair():
     return (
         comb(13, 2) * pow(comb(4, 2), 2) * comb(11, 1) * comb(4, 1)
     )
 # No Pair = High Card
-def calc_no_pair():
+def calcNoPair():
     return (
         (comb(13, 5) - comb(10, 1)) * (pow(comb(4, 1), 5) - comb(4, 1))
     )
 '''END PAIR'''
 ###
 '''START OTHER'''
-def calc_full_house():
+def calcFullHouse():
     return (
         comb(13, 1) * comb(4, 3) * comb(12, 1) * comb(4, 2)
     )
-def calc_straight():
+def calcStraight():
     return (
         (comb(10, 1) * pow(comb(4, 1), 5)) -  (comb(10, 1) * comb(4, 1))
     )
