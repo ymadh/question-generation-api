@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block page_content %}
+<!DOCTYPE html>
+<html lang="en" <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial scale=1.0">
+<title>Question Generator</title>
+</head>
+
+<body>
+    <h1>You can generate probability questions with answers here.</h1>
+    {% if generated != True %}
+    <h3>You can click the "Generate" button below to generate questions.</h3>
+    <a href="http://localhost:8000/generate">
+        <button id="genButton">Generate</button>
+    </a>
+    {% else %}
+    <p>New questions generated</p>
+    {% endif %}
+    <br />
+    {% if dbClear == True %}
+    <p>Database cleared</p>
+    {% else %}
+    <a href="http://localhost:8000/clearDatabase" target="_self">
+        <button id="clearDb">Delete all questions in DB</button>
+    </a>
+    {% endif %}
+    <p>How many questions would you like to retrieve</p>
+    <br />
+    <form action="/returnQuestions/">
+        <label>Difficulty of questions</label>
+        <input type="number" name="difficulty" id="numQs" />
+        <br />
+        <label>Number of questions to return</label>
+        <input type="number" name="numQuestions" id="numQs" />
+        <input type="submit" value="Get Questions">
+    </form>
+
+</body>
+
+</html>
+{% endblock %}
