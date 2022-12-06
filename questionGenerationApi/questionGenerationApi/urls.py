@@ -18,6 +18,7 @@ from django.urls import include, path
 from rest_framework import routers
 from . import views
 
+
 router = routers.DefaultRouter()
 router.register(r'questions', views.QuestionViewSet)
 urlpatterns = [
@@ -28,7 +29,9 @@ urlpatterns = [
     path('<uuid:question_id>/', views.detail, name='detail'),
     path('generate/', views.generate, name='generate'),
     # we can send paramt that match what we need in the view like ?difficulty=<difficulty>
-    path('returnQuestions/<int:numQuestions>/',
+    path('returnQuestions/',
          views.returnQuestions, name='returnQuestions'),
+    path('gui/', views.ui, name='ui'),
+    path('clearDatabase/', views.clearDb, name='clearDb')
 
 ]

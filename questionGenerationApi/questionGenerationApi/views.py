@@ -2,16 +2,15 @@ import itertools
 import json
 from urllib import response
 from django.http import HttpResponse, JsonResponse
-
 from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets
 from rest_framework.response import Response
 from string import Template
-
+from django.views.decorators.csrf import csrf_protect
 from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly, colorOrNumber
-
 from .serializers import QuestionSerializer
 from .models import Question
+
 
 
 numbers = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -36,7 +35,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 def detail(request, question_id):
     return HttpResponse("You're looking at question %s." % question_id)
 
-
+@csrf_protect
 def generate(request):
 
     # add more question types here
@@ -57,20 +56,21 @@ def generate(request):
     colorOrNumber(numbers, color)
     # latest_question_list = Question.objects.order_by('-id')[:5]
     # output = ', '.join([q.question_text for q in latest_question_list])
-    return HttpResponse("OK")
+    context = {"generated": True}
+    return render(request, "index.html", context=context)
 
-
-def returnQuestions(request, numQuestions):
-    questions = Question.objects.all()
+@csrf_protect
+def returnQuestions(request):
     difficulty = request.GET['difficulty']
-    print(f'difficulty recieved: {difficulty}')
+    numQuestions = request.GET['numQuestions']
+    questions = Question.objects.all().filter(difficulty=difficulty)
     questionText = []
     newQuestionsTemplate = Template(
         'question : $questionText -> answer: $answer')
     count = 0
-    for q in questions:
 
-        if count == numQuestions:
+    for q in questions:
+        if count == int(numQuestions):
             continue
         count += 1
         questionString = newQuestionsTemplate.substitute(
@@ -78,10 +78,16 @@ def returnQuestions(request, numQuestions):
         print(newQuestionsTemplate.substitute(
             questionText=q.questionText, answer=q.answer))
         questionText.append(questionString)
-        #questionText[q.questionText] = q.answer
-    responseQuestions = '\n'.join(questionText)
-    print(responseQuestions)
-   # print(questionText)
+
     context = { "list" : questionText}
     return render(request, "questionView.html", context)
-    #return HttpResponse(responseQuestions, content_type='text/plain')
+
+@csrf_protect
+def ui(request): 
+    return render(request, "index.html", {})
+
+@csrf_protect
+def clearDb(request):
+    Question.objects.all().delete()
+    context = {"dbClear": True}
+    return render(request, "index.html", context=context)
