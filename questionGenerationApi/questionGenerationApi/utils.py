@@ -2,7 +2,7 @@ from .models import Question
 from fractions import Fraction
 import itertools
 import random
-import pokerHandFrequencies as PHF
+from pokerHandFrequencies import *
 
 def saveNewQuestion(question):
     q = Question(
