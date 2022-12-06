@@ -7,7 +7,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from string import Template
 from django.views.decorators.csrf import csrf_protect
-from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly, colorOrNumber
+from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly, colorOrNumber, twoPairs
 from .serializers import QuestionSerializer
 from .models import Question
 
@@ -56,6 +56,8 @@ def generate(request):
     colorOrNumber(numbers, color)
     # latest_question_list = Question.objects.order_by('-id')[:5]
     # output = ', '.join([q.question_text for q in latest_question_list])
+    # AA BB C
+    twoPairs(deck)
     context = {"generated": True}
     return render(request, "index.html", context=context)
 
