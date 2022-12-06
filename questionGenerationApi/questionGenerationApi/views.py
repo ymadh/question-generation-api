@@ -3,7 +3,7 @@ import json
 from urllib import response
 from django.http import HttpResponse, JsonResponse
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets
 from rest_framework.response import Response
 from string import Template
@@ -74,10 +74,14 @@ def returnQuestions(request, numQuestions):
             continue
         count += 1
         questionString = newQuestionsTemplate.substitute(
-            questionText=q.questionText, answer=q.answer)
+             questionText=q.questionText, answer=q.answer)
         print(newQuestionsTemplate.substitute(
             questionText=q.questionText, answer=q.answer))
         questionText.append(questionString)
+        #questionText[q.questionText] = q.answer
     responseQuestions = '\n'.join(questionText)
     print(responseQuestions)
-    return HttpResponse(responseQuestions, content_type='text/plain')
+   # print(questionText)
+    context = { "list" : questionText}
+    return render(request, "questionView.html", context)
+    #return HttpResponse(responseQuestions, content_type='text/plain')
