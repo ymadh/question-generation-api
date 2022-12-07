@@ -7,14 +7,14 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from string import Template
 from django.views.decorators.csrf import csrf_protect
-from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly, colorOrNumber, twoPairs
+from .utils import *
 from .serializers import QuestionSerializer
 from .models import Question
 
 
 
-numbers = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
-suites = ['Spade', 'Heart', 'Diamond', 'Club']
+numbers = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
+suites = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
 color = ['Red', 'Black']
 
 # make a deck of cards
@@ -45,19 +45,25 @@ def generate(request):
     # ex: probability of a 4 of diamonds
     singleCard(deck)
 
-    # ex: probabiliy of 3 7's in a 5 card draw
-    multipleCards(deck)
-
-    # AAA QQ
-    fullhouse(deck)
-
     # combinatorics
     # color OR number
     colorOrNumber(numbers, color)
     # latest_question_list = Question.objects.order_by('-id')[:5]
     # output = ', '.join([q.question_text for q in latest_question_list])
-    # AA BB C
-    twoPairs(deck)
+    
+    # Poker Questions
+    highCard(deck)
+    onePair(deck)
+    twoPair(deck)
+    threeOfAKind(deck)
+    fourOfAKind(deck)
+    straight(deck)
+    straightFlush(deck)
+    flush(deck)
+    royalFlush(deck)
+    fullHouse(deck)
+    
+    
     context = {"generated": True}
     return render(request, "index.html", context=context)
 
