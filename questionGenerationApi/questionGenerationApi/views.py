@@ -7,7 +7,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from string import Template
 from django.views.decorators.csrf import csrf_protect
-from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly, colorOrNumber, twoPairs
+from .utils import *
+from .pokerHandQuestionGen import *
 from .serializers import QuestionSerializer
 from .models import Question
 
@@ -56,8 +57,28 @@ def generate(request):
     colorOrNumber(numbers, color)
     # latest_question_list = Question.objects.order_by('-id')[:5]
     # output = ', '.join([q.question_text for q in latest_question_list])
-    # AA BB C
-    twoPairs(deck)
+    
+    ''' Poker Questions '''
+    # It can work with only one parameter where the default question amount is 1.
+    # Ex: highCard(deck)
+    
+    # If the number of questions requested is > the max possibilities, you will only
+    # get the max number of possibilities for your question generation.
+    # Ex: royalFlush(deck, 7) only generates 4 questions as there are only 4
+    # possible.
+    
+    highCard(deck, 3)
+    onePair(deck, 3)
+    twoPair(deck, 3)
+    threeOfAKind(deck, 3)
+    fourOfAKind(deck, 3)
+    straight(deck, 3)
+    straightFlush(deck, 3)
+    flush(deck, 3)
+    royalFlush(deck, 3)
+    fullHouse(deck, 3)
+    
+    
     context = {"generated": True}
     return render(request, "index.html", context=context)
 
