@@ -40,13 +40,13 @@ def highCard(deck, nQuestions=1):
         # Get a random values from the spades cards using index.
         randomVals = random.sample(SpadesIndices, 5)
 
-        draw1 = usedDeck[random.choice(range(randomVals[0], randomVals[0]+4))],
-        draw2 = usedDeck[random.choice(range(randomVals[1], randomVals[1]+4))],
-        draw3 = usedDeck[random.choice(range(randomVals[2], randomVals[2]+4))],
-        draw4 = usedDeck[random.choice(range(randomVals[3], randomVals[3]+4))],
-        draw5 = usedDeck[random.choice(range(randomVals[4], randomVals[4]+4))],
- 
-        hand = [draw1, draw2, draw3, draw4, draw5]
+        hand = [
+            usedDeck[random.choice(range(randomVals[0], randomVals[0]+4))], 
+            usedDeck[random.choice(range(randomVals[1], randomVals[1]+4))], 
+            usedDeck[random.choice(range(randomVals[2], randomVals[2]+4))],
+            usedDeck[random.choice(range(randomVals[3], randomVals[3]+4))], 
+            usedDeck[random.choice(range(randomVals[4], randomVals[4]+4))],
+        ]
         
         if(not handExists(hands, hand)):
             hands.append(hand)
