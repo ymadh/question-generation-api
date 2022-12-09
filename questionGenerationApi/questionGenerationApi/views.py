@@ -15,7 +15,7 @@ from .models import Question
 
 
 numbers = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
-suites = ['Spade', 'Heart', 'Diamond', 'Club']
+suites = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
 color = ['Red', 'Black']
 
 # make a deck of cards

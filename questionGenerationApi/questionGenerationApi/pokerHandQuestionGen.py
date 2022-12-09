@@ -15,12 +15,6 @@ TWO_PAIR = 0.0475390156062425
 ONE_PAIR = 1.625915857154571e-07
 HIGH_CARD = 0.5011773940345369
 
-# Helper to check if a hand exists to avoid duplicates.
-def handExists(src, target):
-    for elem in src:
-        if collections.Counter(elem) == collections.Counter(target) :
-            return True
-
 # HIGH CARD START
 def highCard(deck, nQuestions=1):
     counter = nQuestions
@@ -30,7 +24,7 @@ def highCard(deck, nQuestions=1):
     usedDeck = deck.copy()
     SpadesIndices = []
     randomVals = []
-    hands = []
+    hands = set()
 
     # Get all the indices of all spades cards.
     for card in deck[::4]:
@@ -38,26 +32,26 @@ def highCard(deck, nQuestions=1):
     
     while(counter > 0):
         # Get a random values from the spades cards using index.
-        randomVals = random.sample(SpadesIndices, 5)
-
-        hand = [
+        randomVals = random.sample(SpadesIndices, 5) 
+        hand = frozenset([
             usedDeck[random.choice(range(randomVals[0], randomVals[0]+4))], 
             usedDeck[random.choice(range(randomVals[1], randomVals[1]+4))], 
             usedDeck[random.choice(range(randomVals[2], randomVals[2]+4))],
             usedDeck[random.choice(range(randomVals[3], randomVals[3]+4))], 
             usedDeck[random.choice(range(randomVals[4], randomVals[4]+4))],
-        ]
+        ])
         
-        if(not handExists(hands, hand)):
-            hands.append(hand)
+        if(not hand in hands):
+            hands.add(hand)
             counter = counter -1
-            
+    
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
     
         q = Question()
         q.name = "High Card"
@@ -83,44 +77,43 @@ def onePair(deck, nQuestions=1):
         
     usedDeck = deck.copy()
     SpadesIndices = []
-    hands = []
+    hands = set()
 
     # Get all the indices of all spades cards.
     for card in deck[::4]:
         SpadesIndices.append(usedDeck.index(card))
     
     while(counter > 0):
-        # Get a random value from the spades cards using index.
-        pairValueIndex = random.choice(SpadesIndices)
+        # Get four random values from the spades cards using index
+        valueIndices = random.sample((SpadesIndices), 4)
 
-        # Get Pair Cards
-        pairIndices = random.sample(range(pairValueIndex, pairValueIndex + 3), 2)
-        draw1 = usedDeck[pairIndices[0]]
-        draw2 = usedDeck[pairIndices[1]]
+        # Get Pair Cards 1 Index
+        pairIndices1 = random.sample(range(valueIndices[0], valueIndices[0] + 4), 2)
 
-        # Remove the value that has the pair from deck (4 cards)
-        usedDeck = remove_items(usedDeck, draw1[0], 'numberOnly')
+        # Get Random Remaining Cards Indices
+        randomCard1 = random.choice(range(valueIndices[1], valueIndices[1] + 4))
+        randomCard2 = random.choice(range(valueIndices[2], valueIndices[2] + 4))
+        randomCard3 = random.choice(range(valueIndices[3], valueIndices[3] + 4))
 
-        # Get three random cards from usedDeck
-        remainingIndices = random.sample(range(0, len(usedDeck)), 3)
-        draw3 = usedDeck[remainingIndices[0]]
-        draw4 = usedDeck[remainingIndices[1]]
-        draw5 = usedDeck[remainingIndices[2]]
+        hand = frozenset([
+            usedDeck[pairIndices1[0]], 
+            usedDeck[pairIndices1[1]], 
+            usedDeck[randomCard1], 
+            usedDeck[randomCard2], 
+            usedDeck[randomCard3]
+        ])
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
-        
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
-        
-        usedDeck = deck.copy()
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
     
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
         
         q = Question()
         q.name = "One Pair"
@@ -138,7 +131,6 @@ def onePair(deck, nQuestions=1):
         saveNewQuestion(q)
 # ONE PAIR END
 
-# TWO PAIR START
 def twoPair(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 123552):
@@ -146,48 +138,44 @@ def twoPair(deck, nQuestions=1):
         
     usedDeck = deck.copy()
     SpadesIndices = []
-    hands = []
+    hands = set()
 
     # Get all the indices of all spades cards.
     for card in deck[::4]:
         SpadesIndices.append(usedDeck.index(card))
     
     while(counter > 0):
-        # Get two random values from the spades cards using index
-        pairValueIndices = random.sample((SpadesIndices), 2)
+        # Get three random values from the spades cards using index
+        valueIndices = random.sample((SpadesIndices), 3)
 
-        # Get Pair Cards 1
-        pairIndices1 = random.sample(range(pairValueIndices[0], pairValueIndices[0] + 4), 2)
-        draw1 = usedDeck[pairIndices1[0]]
-        draw2 = usedDeck[pairIndices1[1]]
+        # Get Pair Cards 1 Indices
+        pairIndices1 = random.sample(range(valueIndices[0], valueIndices[0] + 4), 2)
 
-        # Get Pair Cards 2
-        pairIndices2 = random.sample(range(pairValueIndices[1], pairValueIndices[1] + 4), 2)
-        draw3 = usedDeck[pairIndices2[0]]
-        draw4 = usedDeck[pairIndices2[1]]
-
-        # Remove the value that has the pair from deck (8 cards)
-        usedDeck = remove_items(usedDeck, draw1[0], 'numberOnly')
-        usedDeck = remove_items(usedDeck, draw3[0], 'numberOnly')
+        # Get Pair Cards 2 Indices
+        pairIndices2 = random.sample(range(valueIndices[1], valueIndices[1] + 4), 2)
         
-        # Get one random cards from usedDeck
-        remainingIndices = random.sample(range(0, 45), 1)
-        draw5 = usedDeck[remainingIndices[0]]
+        # Get Random Card Index
+        randomCard1 = random.choice(range(valueIndices[2], valueIndices[2] + 4))
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
+        hand = frozenset([
+            usedDeck[pairIndices1[0]], 
+            usedDeck[pairIndices1[1]], 
+            usedDeck[pairIndices2[0]], 
+            usedDeck[pairIndices2[1]], 
+            usedDeck[randomCard1]
+        ])
         
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
-        
-        usedDeck = deck.copy()
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
     
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
     
         q = Question()
         q.name = "Two Pair"
@@ -213,47 +201,44 @@ def threeOfAKind(deck, nQuestions=1):
         
     usedDeck = deck.copy()
     SpadesIndices = []
-    hands = []
+    hands = set()
 
     # Get all the indices of all spades cards.
     for card in deck[::4]:
         SpadesIndices.append(usedDeck.index(card))
     
-    while(counter > 0): 
-        # Get a random value from the spades cards using index.
-        tripleVal = random.choice(SpadesIndices)
+    while(counter > 0):
+        # Get three random values from the spades cards using index
+        valueIndices = random.sample((SpadesIndices), 3)
 
-        # Get offset values for suit.
-        suitOffset = random.sample(range(0, 4), 3)
-            
-        draw1 = usedDeck[tripleVal + suitOffset[0]]
-        draw2 = usedDeck[tripleVal + suitOffset[1]]
-        draw3 = usedDeck[tripleVal + suitOffset[2]]
+        # Get triple Cards Indices
+        tripleIndices = random.sample(range(valueIndices[0], valueIndices[0] + 4), 3)
 
-        # Remove the value that has the pair from deck (4 cards)
-        usedDeck = remove_items(usedDeck, draw1[0], 'numberOnly')
-
-        draw4 = random.choice(usedDeck)
-
-        # Remove the value that has the pair from deck (4 cards)
-        usedDeck = remove_items(usedDeck, draw4[0], 'numberOnly')
-
-        draw5 = random.choice(usedDeck)
+        # Get Random Remaining Cards Indices
+        randomCard1 = random.choice(range(valueIndices[1], valueIndices[1] + 4))
+        draw4 = usedDeck[randomCard1]
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
+        randomCard2 = random.choice(range(valueIndices[2], valueIndices[2] + 4))
         
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
+        hand = frozenset([
+            usedDeck[tripleIndices[0]], 
+            usedDeck[tripleIndices[1]], 
+            usedDeck[tripleIndices[2]], 
+            usedDeck[randomCard1], 
+            usedDeck[randomCard2]
+        ])
         
-        usedDeck = deck.copy()
-        
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
+    
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
         
         q = Question()
         q.name = "Three of a Kind"
@@ -275,46 +260,44 @@ def fourOfAKind(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 624):
         counter = 624
-        
+
     usedDeck = deck.copy()
     SpadesIndices = []
-    hands = []
+    hands = set()
 
     # Get all the indices of all spades cards.
     for card in deck[::4]:
         SpadesIndices.append(usedDeck.index(card))
     
-    while(counter > 0):  
-        # Get a random value from the spades cards using index.
-        tripleVal = random.choice(SpadesIndices)
+    while(counter > 0):
+        # Get three random values from the spades cards using index
+        valueIndices = random.sample((SpadesIndices), 2)
 
-        # Get offset values for suit.
-        suitOffset = random.sample(range(0, 4), 4)
-            
-        draw1 = usedDeck[tripleVal + suitOffset[0]]
-        draw2 = usedDeck[tripleVal + suitOffset[1]]
-        draw3 = usedDeck[tripleVal + suitOffset[2]]
-        draw4 = usedDeck[tripleVal + suitOffset[3]]
+        # Get Quadruple Cards Indices
+        quadIndices = random.sample(range(valueIndices[0], valueIndices[0] + 4), 4)
 
-        # Remove the value that has the pair from deck (4 cards)
-        usedDeck = remove_items(usedDeck, draw1[0], 'numberOnly')
+        # Get Random Remaining Card Index
+        randomCard1 = random.choice(range(valueIndices[1], valueIndices[1] + 4))
 
-        draw5 = random.choice(usedDeck)
+        hand = frozenset([
+            usedDeck[quadIndices[0]],
+            usedDeck[quadIndices[1]],
+            usedDeck[quadIndices[2]],
+            usedDeck[quadIndices[3]],
+            usedDeck[randomCard1],
+        ])
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
-        
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
-        
-        usedDeck = deck.copy()
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
     
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
     
         q = Question()
         q.name = "Four of a Kind"
@@ -339,41 +322,47 @@ def straight(deck, nQuestions=1):
         counter = 10200
         
     usedDeck = deck.copy()
+    # Handle cases for Ace as highest card
+    usedDeck.append(usedDeck[0])
+    usedDeck.append(usedDeck[1])
+    usedDeck.append(usedDeck[2])
+    usedDeck.append(usedDeck[3])
     SpadesIndices = []
-    hands = []
-
-    # Get all the indices of all spades cards.
-    for card in deck[::4]:
-        SpadesIndices.append(usedDeck.index(card))
+    hands = set()
     
-    while(counter > 0):  
+    # Get all the indices of all spades cards.
+    for card in usedDeck[::4]:
+        SpadesIndices.append(usedDeck.index(card))
+        
+    while(counter > 0):
         # Get a random value from the spades cards using index.
-        midValueIndex = SpadesIndices.index(random.choice(SpadesIndices[2:11]))
-
+        midValueIndex = SpadesIndices.index(random.choice(SpadesIndices[2:12]))
 
         # Get offset values for suit.
-        suitOffset = []
-        for i in range(5):
-            suitOffset.append(random.choice(range(0, 4)))
-            
-        draw1 = usedDeck[SpadesIndices[midValueIndex-2] + suitOffset[0]]
-        draw2 = usedDeck[SpadesIndices[midValueIndex-1] + suitOffset[1]]
-        draw3 = usedDeck[SpadesIndices[midValueIndex] + suitOffset[2]]
-        draw4 = usedDeck[SpadesIndices[midValueIndex+1] + suitOffset[3]]
-        draw5 = usedDeck[SpadesIndices[midValueIndex+2] + suitOffset[4]]
+        suitOffset = [0, 0, 0, 0, 0]
+        while suitOffset[0] == suitOffset[1] == suitOffset[2] == suitOffset[3] == suitOffset[4]:
+            for i in range(5):
+                suitOffset[i] = random.choice(range(0, 4))
+                
+        hand = frozenset([    
+            usedDeck[SpadesIndices[midValueIndex-2] + suitOffset[0]],
+            usedDeck[SpadesIndices[midValueIndex-1] + suitOffset[1]],
+            usedDeck[SpadesIndices[midValueIndex] + suitOffset[2]],
+            usedDeck[SpadesIndices[midValueIndex+1] + suitOffset[3]],
+            usedDeck[SpadesIndices[midValueIndex+2] + suitOffset[4]],
+        ])
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
-        
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
-        
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
+    
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
     
         q = Question()
         q.name = "Straight"
@@ -399,7 +388,7 @@ def straightFlush(deck, nQuestions=1):
         
     usedDeck = deck.copy()
     SpadesIndices = []
-    hands = []
+    hands = set()
 
     # Get all the indices of all spades cards.
     for card in deck[::4]:
@@ -411,25 +400,26 @@ def straightFlush(deck, nQuestions=1):
         
         # Get offset value for suit.
         suitOffset = random.choice(range(0, 4))
-            
-        draw1 = usedDeck[SpadesIndices[midValueIndex-2] + suitOffset]
-        draw2 = usedDeck[SpadesIndices[midValueIndex-1] + suitOffset]
-        draw3 = usedDeck[SpadesIndices[midValueIndex] + suitOffset]
-        draw4 = usedDeck[SpadesIndices[midValueIndex+1] + suitOffset]
-        draw5 = usedDeck[SpadesIndices[midValueIndex+2] + suitOffset]
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
-
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
+        hand = frozenset([
+            usedDeck[SpadesIndices[midValueIndex-2] + suitOffset],
+            usedDeck[SpadesIndices[midValueIndex-1] + suitOffset],
+            usedDeck[SpadesIndices[midValueIndex] + suitOffset],
+            usedDeck[SpadesIndices[midValueIndex+1] + suitOffset],
+            usedDeck[SpadesIndices[midValueIndex+2] + suitOffset],
+        ])
         
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
+    
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
     
         q = Question()
         q.name = "Straight Flush"
@@ -469,51 +459,65 @@ def isConsecutive(nums):
 ''' HELPER END '''
 
 # FLUSH START
+# NOTE: It generates 5116 max. I could not identify the 8 that goes through.
 def flush(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 5108):
         counter = 5108
         
     usedDeck = deck.copy()
+
     SpadesIndices = []
     SpadeValueIndices = []
-    hands = []
+    hands = set()
     
     # Get all the indices of all spades cards.
-    for card in deck[::4]:
+    for card in usedDeck[::4]:
         SpadesIndices.append(usedDeck.index(card))
 
-    while(counter > 0):     
-        isFlush = True
+    while(counter > 0):
+        isOtherFlush = True
         
-        # To check if it is a straight flush
+        # To check if it is a straight flush or royal flush
         # It's very efficient because there's only 9 possibilities that the hand is a straight
-        while isFlush:
+        # flush if accounting just the values.
+        while isOtherFlush:
+            # 1287 Possibilities
             SpadeValueIndices = random.sample(range(0, len(SpadesIndices)), 5)
-            isFlush = isConsecutive(SpadeValueIndices)
-
-
+            SpadeValueIndicesSet = (SpadeValueIndices)
+            
+            # Check if royal flush (1 possibility) -> 1286
+            if(SpadeValueIndicesSet == set([0, 9, 10, 11, 12])):
+                continue
+            # Check if straight flush (9 possibilities) -> 1277
+            elif(isConsecutive(SpadeValueIndices)):
+                continue
+            else:
+                isOtherFlush = False
+            
         # Get offset value for suit.
         suitOffset = random.choice(range(0, 4))
-            
-        draw1 = usedDeck[SpadesIndices[SpadeValueIndices[0]] + suitOffset]
-        draw2 = usedDeck[SpadesIndices[SpadeValueIndices[1]] + suitOffset]
-        draw3 = usedDeck[SpadesIndices[SpadeValueIndices[2]] + suitOffset]
-        draw4 = usedDeck[SpadesIndices[SpadeValueIndices[3]] + suitOffset]
-        draw5 = usedDeck[SpadesIndices[SpadeValueIndices[4]] + suitOffset]
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
-
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
+        hand = frozenset([ 
+            usedDeck[SpadesIndices[SpadeValueIndices[0]] + suitOffset],
+            usedDeck[SpadesIndices[SpadeValueIndices[1]] + suitOffset],
+            usedDeck[SpadesIndices[SpadeValueIndices[2]] + suitOffset],
+            usedDeck[SpadesIndices[SpadeValueIndices[3]] + suitOffset],
+            usedDeck[SpadesIndices[SpadeValueIndices[4]] + suitOffset],
+        ])
         
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
+    
+    
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
     
         q = Question()
         q.name = "Flush"
@@ -539,7 +543,7 @@ def royalFlush(deck, nQuestions=1):
         
     usedDeck = deck.copy()
     SpadesIndices = []
-    hands = []
+    hands = set()
 
     # Get all the indices of all spades cards.
     for card in deck[::4]:
@@ -548,25 +552,26 @@ def royalFlush(deck, nQuestions=1):
     while(counter > 0):     
         # Get offset value for suit.
         suitOffset = random.choice(range(0, 4))
-            
-        draw1 = usedDeck[SpadesIndices[0] + suitOffset]
-        draw2 = usedDeck[SpadesIndices[12] + suitOffset]
-        draw3 = usedDeck[SpadesIndices[11] + suitOffset]
-        draw4 = usedDeck[SpadesIndices[10] + suitOffset]
-        draw5 = usedDeck[SpadesIndices[9] + suitOffset]
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
+        hand = frozenset([
+            usedDeck[SpadesIndices[0] + suitOffset],
+            usedDeck[SpadesIndices[12] + suitOffset],
+            usedDeck[SpadesIndices[11] + suitOffset],
+            usedDeck[SpadesIndices[10] + suitOffset],
+            usedDeck[SpadesIndices[9] + suitOffset],
+        ])
 
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
         
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
     
         q = Question()
         q.name = "Royal Flush"
@@ -590,39 +595,41 @@ def fullHouse(deck, nQuestions=1):
     
     usedDeck = deck.copy()
     SpadesIndices = []
-    hands = []
+    hands = set()
 
     # Get all the indices of all spades cards.
     for card in deck[::4]:
         SpadesIndices.append(usedDeck.index(card))
    
     while(counter > 0):          
-        # Get two random values from the spades cards using index
+        # Get two random values indices from the spades cards using index
         pairValueIndices = random.sample((SpadesIndices), 2)
 
-        # Get Pair Cards 1
-        pairIndices1 = random.sample(range(pairValueIndices[0], pairValueIndices[0] + 4), 3)
-        draw1 = usedDeck[pairIndices1[0]]
-        draw2 = usedDeck[pairIndices1[1]]
-        draw3 = usedDeck[pairIndices1[2]]
-
-        # Get Pair Cards 2
-        pairIndices2 = random.sample(range(pairValueIndices[1], pairValueIndices[1] + 4), 2)
-        draw4 = usedDeck[pairIndices2[1]]
-        draw5 = usedDeck[pairIndices2[0]]
+        # Get Triple Cards Indices
+        tripleIndices = random.sample(range(pairValueIndices[0], pairValueIndices[0] + 4), 3)
         
-        hand = [draw1, draw2, draw3, draw4, draw5]
+        # Get Pair Cards Indices
+        pairIndices = random.sample(range(pairValueIndices[1], pairValueIndices[1] + 4), 2)
+        
+        hand = frozenset([
+            usedDeck[tripleIndices[0]],
+            usedDeck[tripleIndices[1]],
+            usedDeck[tripleIndices[2]],
+            usedDeck[pairIndices[0]],
+            usedDeck[pairIndices[1]],
+        ])
 
-        if(not handExists(hands, hand)):
-            hands.append(hand)
-            counter = counter - 1
+        if(not hand in hands):
+            hands.add(hand)
+            counter = counter -1
         
     for hand in hands:
-        draw1 = hand[0]
-        draw2 = hand[1]
-        draw3 = hand[2]
-        draw4 = hand[3]
-        draw5 = hand[4]
+        vals = list(hand)
+        draw1 = vals[0]
+        draw2 = vals[1]
+        draw3 = vals[2]
+        draw4 = vals[3]
+        draw5 = vals[4]
     
         q = Question()
         q.name = "Full House"
