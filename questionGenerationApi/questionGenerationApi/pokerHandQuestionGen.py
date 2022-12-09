@@ -439,11 +439,16 @@ def straightFlush(deck, nQuestions=1):
 
 ''' HELPER START '''
 # To help detect straight in flush function. This will be used using the indices in SpadesIndices
-def isConsecutive(nums):
+# There's a defect where 0 is not accounted for, so there's a fix for that
+def isConsecutive(input):
+    nums = []
+    for number in input:
+        nums.append(number + 1)
+    
     if len(nums) < 1: 
         return False 
     min_val = min(nums) 
-    max_val = max(nums) 
+    max_val = max(nums)
     if max_val - min_val + 1 == len(nums): 
         for i in range(len(nums)): 
             if nums[i] < 0: 
@@ -459,7 +464,6 @@ def isConsecutive(nums):
 ''' HELPER END '''
 
 # FLUSH START
-# NOTE: It generates 5116 max. I could not identify the 8 that goes through.
 def flush(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 5108):
@@ -484,7 +488,7 @@ def flush(deck, nQuestions=1):
         while isOtherFlush:
             # 1287 Possibilities
             SpadeValueIndices = random.sample(range(0, len(SpadesIndices)), 5)
-            SpadeValueIndicesSet = (SpadeValueIndices)
+            SpadeValueIndicesSet = set(SpadeValueIndices)
             
             # Check if royal flush (1 possibility) -> 1286
             if(SpadeValueIndicesSet == set([0, 9, 10, 11, 12])):
