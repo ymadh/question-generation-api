@@ -99,7 +99,6 @@ def clearDb(request):
     return render(request, "index.html", context=context)
 
 
-@csrf_protect
 @api_view(['GET'])
 def singleQuestion(request):
     difficulty = request.GET['difficulty']
