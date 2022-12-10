@@ -1,7 +1,6 @@
 from .models import Question
 import random
-from .utils import saveNewQuestion, remove_items
-import collections
+from .utils import saveNewQuestion
 
 # These are the hard-coded probabilities for each poker hand type.
 ROYAL_FLUSH = 1.5390771693292702e-06
@@ -34,11 +33,11 @@ def highCard(deck, nQuestions=1):
         # Get a random values from the spades cards using index.
         randomVals = random.sample(SpadesIndices, 5) 
         hand = frozenset([
-            usedDeck[random.choice(range(randomVals[0], randomVals[0]+4))], 
-            usedDeck[random.choice(range(randomVals[1], randomVals[1]+4))], 
-            usedDeck[random.choice(range(randomVals[2], randomVals[2]+4))],
-            usedDeck[random.choice(range(randomVals[3], randomVals[3]+4))], 
-            usedDeck[random.choice(range(randomVals[4], randomVals[4]+4))],
+            usedDeck[random.randrange(randomVals[0], randomVals[0]+4)], 
+            usedDeck[random.randrange(randomVals[1], randomVals[1]+4)], 
+            usedDeck[random.randrange(randomVals[2], randomVals[2]+4)],
+            usedDeck[random.randrange(randomVals[3], randomVals[3]+4)], 
+            usedDeck[random.randrange(randomVals[4], randomVals[4]+4)],
         ])
         
         if(not hand in hands):
@@ -56,7 +55,7 @@ def highCard(deck, nQuestions=1):
         q = Question()
         q.name = "High Card"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -91,9 +90,9 @@ def onePair(deck, nQuestions=1):
         pairIndices1 = random.sample(range(valueIndices[0], valueIndices[0] + 4), 2)
 
         # Get Random Remaining Cards Indices
-        randomCard1 = random.choice(range(valueIndices[1], valueIndices[1] + 4))
-        randomCard2 = random.choice(range(valueIndices[2], valueIndices[2] + 4))
-        randomCard3 = random.choice(range(valueIndices[3], valueIndices[3] + 4))
+        randomCard1 = random.randrange(valueIndices[1], valueIndices[1] + 4)
+        randomCard2 = random.randrange(valueIndices[2], valueIndices[2] + 4)
+        randomCard3 = random.randrange(valueIndices[3], valueIndices[3] + 4)
 
         hand = frozenset([
             usedDeck[pairIndices1[0]], 
@@ -118,7 +117,7 @@ def onePair(deck, nQuestions=1):
         q = Question()
         q.name = "One Pair"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -155,7 +154,7 @@ def twoPair(deck, nQuestions=1):
         pairIndices2 = random.sample(range(valueIndices[1], valueIndices[1] + 4), 2)
         
         # Get Random Card Index
-        randomCard1 = random.choice(range(valueIndices[2], valueIndices[2] + 4))
+        randomCard1 = random.randrange(valueIndices[2], valueIndices[2] + 4)
         
         hand = frozenset([
             usedDeck[pairIndices1[0]], 
@@ -180,7 +179,7 @@ def twoPair(deck, nQuestions=1):
         q = Question()
         q.name = "Two Pair"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -215,10 +214,10 @@ def threeOfAKind(deck, nQuestions=1):
         tripleIndices = random.sample(range(valueIndices[0], valueIndices[0] + 4), 3)
 
         # Get Random Remaining Cards Indices
-        randomCard1 = random.choice(range(valueIndices[1], valueIndices[1] + 4))
+        randomCard1 = random.randrange(valueIndices[1], valueIndices[1] + 4)
         draw4 = usedDeck[randomCard1]
         
-        randomCard2 = random.choice(range(valueIndices[2], valueIndices[2] + 4))
+        randomCard2 = random.randrange(valueIndices[2], valueIndices[2] + 4)
         
         hand = frozenset([
             usedDeck[tripleIndices[0]], 
@@ -243,7 +242,7 @@ def threeOfAKind(deck, nQuestions=1):
         q = Question()
         q.name = "Three of a Kind"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -277,7 +276,7 @@ def fourOfAKind(deck, nQuestions=1):
         quadIndices = random.sample(range(valueIndices[0], valueIndices[0] + 4), 4)
 
         # Get Random Remaining Card Index
-        randomCard1 = random.choice(range(valueIndices[1], valueIndices[1] + 4))
+        randomCard1 = random.randrange(valueIndices[1], valueIndices[1] + 4)
 
         hand = frozenset([
             usedDeck[quadIndices[0]],
@@ -302,7 +301,7 @@ def fourOfAKind(deck, nQuestions=1):
         q = Question()
         q.name = "Four of a Kind"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -342,7 +341,7 @@ def straight(deck, nQuestions=1):
         suitOffset = [0, 0, 0, 0, 0]
         while suitOffset[0] == suitOffset[1] == suitOffset[2] == suitOffset[3] == suitOffset[4]:
             for i in range(5):
-                suitOffset[i] = random.choice(range(0, 4))
+                suitOffset[i] = random.randrange(0, 4)
                 
         hand = frozenset([    
             usedDeck[SpadesIndices[midValueIndex-2] + suitOffset[0]],
@@ -367,7 +366,7 @@ def straight(deck, nQuestions=1):
         q = Question()
         q.name = "Straight"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -399,7 +398,7 @@ def straightFlush(deck, nQuestions=1):
         midValueIndex = SpadesIndices.index(random.choice(SpadesIndices[2:11]))
         
         # Get offset value for suit.
-        suitOffset = random.choice(range(0, 4))
+        suitOffset = random.randrange(0, 4)
         
         hand = frozenset([
             usedDeck[SpadesIndices[midValueIndex-2] + suitOffset],
@@ -424,7 +423,7 @@ def straightFlush(deck, nQuestions=1):
         q = Question()
         q.name = "Straight Flush"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -500,7 +499,7 @@ def flush(deck, nQuestions=1):
                 isOtherFlush = False
             
         # Get offset value for suit.
-        suitOffset = random.choice(range(0, 4))
+        suitOffset = random.randrange(0, 4)
         
         hand = frozenset([ 
             usedDeck[SpadesIndices[SpadeValueIndices[0]] + suitOffset],
@@ -526,7 +525,7 @@ def flush(deck, nQuestions=1):
         q = Question()
         q.name = "Flush"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -555,7 +554,7 @@ def royalFlush(deck, nQuestions=1):
         
     while(counter > 0):     
         # Get offset value for suit.
-        suitOffset = random.choice(range(0, 4))
+        suitOffset = random.randrange(0, 4)
         
         hand = frozenset([
             usedDeck[SpadesIndices[0] + suitOffset],
@@ -580,7 +579,7 @@ def royalFlush(deck, nQuestions=1):
         q = Question()
         q.name = "Royal Flush"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -638,7 +637,7 @@ def fullHouse(deck, nQuestions=1):
         q = Question()
         q.name = "Full House"
         q.questionText = (    
-            f'What are the chances of drawing a 5-hand Poker hand with ' + 
+            f'What are the chances of drawing a five-card poker hand with ' + 
             f'the {draw1[0]} of {draw1[1]}, ' + 
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +

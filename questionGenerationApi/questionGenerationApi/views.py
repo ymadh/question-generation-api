@@ -9,6 +9,7 @@ from string import Template
 from django.views.decorators.csrf import csrf_protect
 from .utils import *
 from .pokerHandQuestionGen import *
+from .genericHandQuestionGen import *
 from .serializers import QuestionSerializer
 from .models import Question
 
@@ -77,6 +78,12 @@ def generate(request):
     flush(deck, 3)
     royalFlush(deck, 3)
     fullHouse(deck, 3)
+    
+    '''Generic Hand Questions'''
+    notContainsCardInHand(deck, 3)
+    containCardsInHand(deck, 3)
+    exactlyOneValueInHand(deck, 3)
+    atLeastOneValueInHand(deck, 3)
     
     
     context = {"generated": True}
