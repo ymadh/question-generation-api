@@ -32,6 +32,8 @@ urlpatterns = [
     path('returnQuestions/',
          views.returnQuestions, name='returnQuestions'),
     path('gui/', views.ui, name='ui'),
-    path('clearDatabase/', views.clearDb, name='clearDb')
+    path('clearDatabase/', views.clearDb, name='clearDb'),
+    path('singleQuestion/',
+         views.singleQuestion, name='singleQuestion'),
 
 ]

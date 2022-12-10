@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_protect
 from .utils import fullhouse, multipleCards, singleCard, singleCardNumberOnly, colorOrNumber, twoPairs
 from .serializers import QuestionSerializer
 from .models import Question
-
+from rest_framework.decorators import api_view
 
 
 numbers = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -34,6 +34,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 # sample view
 def detail(request, question_id):
     return HttpResponse("You're looking at question %s." % question_id)
+
 
 @csrf_protect
 def generate(request):
@@ -61,6 +62,7 @@ def generate(request):
     context = {"generated": True}
     return render(request, "index.html", context=context)
 
+
 @csrf_protect
 def returnQuestions(request):
     difficulty = request.GET['difficulty']
@@ -76,20 +78,34 @@ def returnQuestions(request):
             continue
         count += 1
         questionString = newQuestionsTemplate.substitute(
-             questionText=q.questionText, answer=q.answer)
+            questionText=q.questionText, answer=q.answer)
         print(newQuestionsTemplate.substitute(
             questionText=q.questionText, answer=q.answer))
         questionText.append(questionString)
 
-    context = { "list" : questionText}
+    context = {"list": questionText}
     return render(request, "questionView.html", context)
 
+
 @csrf_protect
-def ui(request): 
+def ui(request):
     return render(request, "index.html", {})
+
 
 @csrf_protect
 def clearDb(request):
     Question.objects.all().delete()
     context = {"dbClear": True}
     return render(request, "index.html", context=context)
+
+
+@csrf_protect
+@api_view(['GET'])
+def singleQuestion(request):
+    difficulty = request.GET['difficulty']
+    numQuestions = int(request.GET['numQuestions'])
+    queryset = Question.objects.all().filter(
+        difficulty=difficulty)[:numQuestions]
+    serializer = QuestionSerializer(queryset, many=True)
+
+    return Response(serializer.data)
