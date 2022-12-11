@@ -3,6 +3,7 @@ from fractions import Fraction
 import itertools
 import random
 
+
 def saveNewQuestion(question):
     q = Question(
         name=question.name,
@@ -31,6 +32,7 @@ def remove_items(test_list, item, typeOfMatch):
         ))
         return res
 
+
 def singleCardNumberOnly(deck):
     # chances of getting a single value from a deck off cards
     usedDeck = deck.copy()
@@ -39,12 +41,11 @@ def singleCardNumberOnly(deck):
         q = Question()
         q.name = "Single Card Number Only"
         q.questionText = f'What are the chances of drawing a {draw[0]} from a single deck of cards?'
-        q.answer = round(4/52, 2)
+        q.answer = 0.07
         q.difficulty = 1
         q.numInputs = 0
         saveNewQuestion(q)
         usedDeck = remove_items(usedDeck, draw[0], 'numberOnly')
-
 
 
 def singleCard(deck):
@@ -55,12 +56,13 @@ def singleCard(deck):
         q = Question()
         q.name = "Single Card"
         q.questionText = f'What are the chances of drawing a {draw[0]} of {draw[1]} from a single deck of cards?'
-        q.answer = round(1/52, 2)
+        q.answer = 0.02
         q.difficulty = 1
         q.numInputs = 0
         saveNewQuestion(q)
         # add to a used list so we dont repeat
         usedDeck = remove_items(usedDeck, draw, 'numberAndSuite')
+
 
 def colorOrNumber(numbers, color):
     for i in range(len(numbers)):
@@ -74,8 +76,11 @@ def colorOrNumber(numbers, color):
             q.numInputs = 0
             saveNewQuestion(q)
 
+
 '''POKER HANDS'''
 # n of a kind... type questions
+
+
 def multipleCards(deck):
     usedDeck = deck.copy()
     for numCards in range(2, 4):
@@ -85,11 +90,11 @@ def multipleCards(deck):
             q.name = "Multiple Card"
             q.questionText = f'What are the chances of drawing {numCards} {draw[0]}\'s from a 5 card draw?'
             if (numCards == 2):
-                q.answer = 1.625915857154571e-07
+                q.answer = 0.42
             elif (numCards == 3):
-                q.answer = 0.0035214085634253703
+                q.answer = 0.0035
             elif (numCards == 4):
-                q.answer = 0.00024009603841536616
+                q.answer = 0.00024
             q.difficulty = numCards  # two of a kind is easier than 4 of a kind
             q.numInputs = 0
             saveNewQuestion(q)

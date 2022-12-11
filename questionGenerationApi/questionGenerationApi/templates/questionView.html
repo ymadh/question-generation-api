@@ -1,20 +1,25 @@
+{% extends "base.html" %} {% block page_content %} {% load static %}
 <!DOCTYPE html>
-<html lang="en"
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial scale=1.0">
-    <title>Question Page</title>
-</head>
-<body>
+<html lang="en">
+  <link rel="stylesheet" href="{% static 'index.css' %}" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial scale=1.0" />
+
+    <title>Question Generator</title>
+  </head>
+
+  <body>
     <h1>Here are Questions</h1>
     <ol>
-        {% for i in list %}
-        <li>{{ i }}</li>
-        {% endfor %}
+      {% for i in list %}
+      <li>{{ i }}</li>
+      {% endfor %}
     </ol>
     <br />
     <a href="http://localhost:8000/gui" target="_self">
-        <button id="Return to dashboard">Return to dashboard</button>
+      <button id="Return to dashboard">Return to dashboard</button>
     </a>
-</body>
+  </body>
 </html>
+{% endblock %}

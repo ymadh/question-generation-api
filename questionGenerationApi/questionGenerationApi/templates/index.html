@@ -1,22 +1,23 @@
-{% extends "base.html" %}
-{% block page_content %}
-{% load static %}
+{% extends "base.html" %} {% block page_content %} {% load static %}
 <!DOCTYPE html>
-<html lang="en" >
-    <link rel="stylesheet" href="{% static 'index.css' %}">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial scale=1.0">
+<html lang="en">
+  <link rel="stylesheet" href="{% static 'index.css' %}" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial scale=1.0" />
 
-<title>Question Generator</title>
-</head>
+    <title>Question Generator</title>
+  </head>
 
-<body>
+  <body>
     <h1>You can generate probability questions with answers below.</h1>
     {% if generated != True %}
-    <h3>Click the "Generate" button below to generate questions if this is your first time using the system.</h3>
+    <h3>
+      Click the "Generate" button below to generate questions if this is your
+      first time using the system.
+    </h3>
     <a href="http://localhost:8000/generate">
-        <button class="button" id="genButton">Generate</button>
+      <button class="button" id="genButton">Generate</button>
     </a>
     {% else %}
     <p>New questions generated</p>
@@ -25,36 +26,35 @@
     {% if data.dbClear == True %}
     <p>Database cleared</p>
     {% else %}
-    <h3>If you want to start over you may clear the database and generate new questions</h3>
+    <h3>
+      If you want to start over you may clear the database and generate new
+      questions
+    </h3>
     <a href="http://localhost:8000/clearDatabase" target="_self">
-        <button class="button" id="clearDb">Delete all questions in DB</button>
+      <button class="button" id="clearDb">Delete all questions in DB</button>
     </a>
-    {% endif %}
-
-    {% if data.firstTime != True %}
+    {% endif %} {% if data.firstTime != True %}
     <p>How many questions would you like to retrieve</p>
     <br />
     <p>{{data.firstTime}}</p>
     <form action="/returnQuestions/">
-        <label>Difficulty of questions 1-4</label>
-        <input type="number" name="difficulty" id="numQs" />
-        <br />
-        <label>Number of questions to return</label>
-        <input type="number" name="numQuestions" id="numQs" />
-        <input class="button" type="submit" value="Get Questions">
+      <label>Difficulty of questions 1-6</label>
+      <input type="number" name="difficulty" id="numQs" />
+      <br />
+      <label>Number of questions to return</label>
+      <input type="number" name="numQuestions" id="numQs" />
+      <input class="button" type="submit" value="Get Questions" />
     </form>
     <br />
     <p>View a single random question with answer</p>
     <a href="http://localhost:8000/singleQuestion" target="_self">
-        <button class="button" id="View Single Question">View question</button>
+      <button class="button" id="View Single Question">View question</button>
     </a>
     {% else %}
     <h2>You must generate questions to begin</h2>
-    {% endif %}
-{% if data.singleQuestion == True %}
+    {% endif %} {% if data.singleQuestion == True %}
     <p>{{data.question}}</p>
-{% endif %}
-</body>
-
+    {% endif %}
+  </body>
 </html>
 {% endblock %}
