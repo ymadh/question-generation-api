@@ -65,7 +65,7 @@ def highCard(deck, nQuestions=1):
             f'the {draw5[0]} of {draw5[1]}?'
         )
         q.answer = HIGH_CARD
-        q.difficulty = 5
+        q.difficulty = 1
         q.numInputs = 0
         saveNewQuestion(q)
 # HIGH CARD END
@@ -130,7 +130,7 @@ def onePair(deck, nQuestions=1):
             f'the {draw5[0]} of {draw5[1]}?'
         )
         q.answer = ONE_PAIR
-        q.difficulty = 4
+        q.difficulty = 2
         q.numInputs = 0
         saveNewQuestion(q)
 # ONE PAIR END
@@ -261,7 +261,7 @@ def threeOfAKind(deck, nQuestions=1):
             f'the {draw5[0]} of {draw5[1]}?'
         )
         q.answer = THREE_KIND
-        q.difficulty = 5
+        q.difficulty = 3
         q.numInputs = 0
         saveNewQuestion(q)
 # THREE OF A KIND END
@@ -322,7 +322,7 @@ def fourOfAKind(deck, nQuestions=1):
             f'the {draw5[0]} of {draw5[1]}?'
         )
         q.answer = FOUR_KIND
-        q.difficulty = 5
+        q.difficulty = 4
         q.numInputs = 0
         saveNewQuestion(q)
 # FOUR OF A KIND END
@@ -556,7 +556,7 @@ def flush(deck, nQuestions=1):
             f'the {draw5[0]} of {draw5[1]}?'
         )
         q.answer = FLUSH
-        q.difficulty = 5
+        q.difficulty = 6
         q.numInputs = 0
         saveNewQuestion(q)
 # FLUSH END
@@ -612,7 +612,7 @@ def royalFlush(deck, nQuestions=1):
             f'the {draw5[0]} of {draw5[1]}?'
         )
         q.answer = ROYAL_FLUSH
-        q.difficulty = 5
+        q.difficulty = 6
         q.numInputs = 0
         saveNewQuestion(q)
 

@@ -121,7 +121,7 @@ def fullhouse(deck):
             q = Question()
             q.name = "Full House"
             q.questionText = f'What are the chances of drawing {draw1} {draw2} {draw3} {draw4} {draw5}?'
-            q.answer = 0.0014405762304921968
+            q.answer = 0.0014
             q.difficulty = 6
             q.numInputs = 0
             saveNewQuestion(q)

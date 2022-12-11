@@ -94,7 +94,8 @@ def generate(request):
 def returnQuestions(request):
     difficulty = request.GET['difficulty']
     numQuestions = request.GET['numQuestions']
-    questions = Question.objects.all().filter(difficulty=difficulty)
+    questions = Question.objects.all().filter(
+        difficulty__lte=difficulty).order_by("?")
     questionText = []
     newQuestionsTemplate = Template(
         'question : $questionText -> answer: $answer')
