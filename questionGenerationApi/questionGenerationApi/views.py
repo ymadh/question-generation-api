@@ -92,26 +92,11 @@ def generate(request):
 
 @csrf_protect
 def returnQuestions(request):
-    difficulty = request.GET['difficulty']
-    numQuestions = request.GET['numQuestions']
+    difficulty = request.GET.get('difficulty', 1)
+    numQuestions = request.GET.get('numQuestions', 10)
     questions = Question.objects.all().filter(
-        difficulty__lte=difficulty).order_by("?")
-    questionText = []
-    newQuestionsTemplate = Template(
-        'question : $questionText -> answer: $answer')
-    count = 0
-
-    for q in questions:
-        if count == int(numQuestions):
-            continue
-        count += 1
-        questionString = newQuestionsTemplate.substitute(
-            questionText=q.questionText, answer=q.answer)
-        print(newQuestionsTemplate.substitute(
-            questionText=q.questionText, answer=q.answer))
-        questionText.append(questionString)
-
-    context = {"list": questionText}
+        difficulty__lte=difficulty).order_by("?")[:int(numQuestions)]
+    context = {"list": questions}
     return render(request, "questionView.html", context)
 
 
@@ -134,5 +119,8 @@ def singleQuestion(request):
     count = Question.objects.all().count()
     random_index = randint(0, count - 1)
     question = Question.objects.all()[random_index]
-    context = {'data': {"singleQuestion": True, "question": question}}
+    print(question)
+    print(question.questionText)
+    questionParts = {"name": question.name, "question": question.questionText, "answer": question.answer}
+    context = {'data': {"singleQuestion": True, "question": questionParts}}
     return render(request, "index.html", context)

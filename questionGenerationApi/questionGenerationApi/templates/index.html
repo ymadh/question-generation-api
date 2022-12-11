@@ -7,6 +7,17 @@
     <meta name="viewport" content="width=device-width, initial scale=1.0" />
 
     <title>Question Generator</title>
+
+    <script>
+        function CopyToClipboard(id) {
+            var r = document.createRange();
+            r.selectNode(document.getElementById(id));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(r);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges
+        }
+    </script>
   </head>
 
   <body>
@@ -16,11 +27,12 @@
       Click the "Generate" button below to generate questions if this is your
       first time using the system.
     </h3>
+    <p>Each button press generates 292 questions.</p>
     <a href="http://localhost:8000/generate">
       <button class="button" id="genButton">Generate</button>
     </a>
     {% else %}
-    <p>New questions generated</p>
+    <p>New questions generated!</p>
     {% endif %}
     <br />
     {% if data.dbClear == True %}
@@ -36,13 +48,12 @@
     {% endif %} {% if data.firstTime != True %}
     <p>How many questions would you like to retrieve</p>
     <br />
-    <p>{{data.firstTime}}</p>
-    <form action="/returnQuestions/">
+    <form class="inputs" action="/returnQuestions/">
       <label>Maximum level of difficulty 1-6 (1 easy, 6 hard)</label>
-      <input type="number" name="difficulty" id="numQs" />
+      <input type="number" name="difficulty" id="numQs" min="1" max="6" value ="1" oninput="validity.valid||(value='');"/>
       <br />
-      <label>Number of questions to return</label>
-      <input type="number" name="numQuestions" id="numQs" />
+      <label>Number of questions to return between 1 and 200</label>
+      <input type="number" name="numQuestions" id="numQs" min="1" max="200" value ="1" oninput="validity.valid||(value='');"/>
       <input class="button" type="submit" value="Get Questions" />
     </form>
     <br />
@@ -53,7 +64,23 @@
     {% else %}
     <h2>You must generate questions to begin</h2>
     {% endif %} {% if data.singleQuestion == True %}
-    <p>{{data.question}}</p>
+    <div id="singleQBox">
+        <p>Question Type: {{ data.question.name }}</p>
+        <p>Question Text:</p>
+        <div class="questionTextCopyBlock">
+            <a href-="#" onclick="CopyToClipboard('questionText'); return false">
+                <button class="button">Copy Question Text</button>
+            </a>
+            <p id="questionText">{{ data.question.question }}</p>
+        </div>
+        <p>Answer:</p>
+        <div class="questionTextCopyBlock">
+            <a href-="#" onclick="CopyToClipboard('answer'); return false">
+                <button class="button">Copy Answer</button>
+            </a>
+            <p id="answer">{{ data.question.answer }}</p>
+        </div>
+    </div>
     {% endif %}
   </body>
 </html>
