@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets
 from rest_framework.response import Response
 from string import Template
+from random import randint
 from django.views.decorators.csrf import csrf_protect
 from .utils import *
 from .pokerHandQuestionGen import *
@@ -117,22 +118,22 @@ def returnQuestions(request):
 
 @csrf_protect
 def ui(request):
-    return render(request, "index.html", {})
+    emptyDb = Question.objects.all().count() == 0
+    context = { "data": {"firstTime" : emptyDb }}
+    return render(request, "index.html", context)
 
 
 @csrf_protect
 def clearDb(request):
     Question.objects.all().delete()
-    context = {"dbClear": True}
-    return render(request, "index.html", context=context)
+    context = {"data": {"dbClear": True, "firstTime": True}}
+    return render(request, "index.html", context)
 
 
 @api_view(['GET'])
 def singleQuestion(request):
-    difficulty = request.GET['difficulty']
-    numQuestions = int(request.GET['numQuestions'])
-    queryset = Question.objects.all().filter(
-        difficulty=difficulty)[:numQuestions]
-    serializer = QuestionSerializer(queryset, many=True)
-
-    return Response(serializer.data)
+    count = Question.objects.all().count()
+    random_index = randint(0, count - 1)
+    question = Question.objects.all()[random_index]
+    context = {'data': {"singleQuestion": True, "question": question}}
+    return render(request, "index.html", context)
