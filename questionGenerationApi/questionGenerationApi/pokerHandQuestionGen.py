@@ -4,8 +4,8 @@ from .utils import saveNewQuestion
 
 # These are the hard-coded probabilities for each poker hand type.
 ROYAL_FLUSH = 0.00015
-STRAIGHT_FLUSH = 0.000015
-FOUR_KIND = 0.00024
+STRAIGHT_FLUSH = 0.00000033 # updated to show answer for 1 specifically suited royal flush
+FOUR_KIND = 0.000018
 FULL_HOUSE = 0.0014
 FLUSH = 0.002
 STRAIGHT = 0.004
@@ -57,12 +57,12 @@ def highCard(deck, nQuestions=1):
         q = Question()
         q.name = "High Card"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a five-card poker hand where your best hand is a high card? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
             f'the {draw4[0]} of {draw4[1]}, and ' +
-            f'the {draw5[0]} of {draw5[1]}?'
+            f'the {draw5[0]} of {draw5[1]}.'
         )
         q.answer = HIGH_CARD
         q.difficulty = 1
@@ -122,12 +122,12 @@ def onePair(deck, nQuestions=1):
         q = Question()
         q.name = "One Pair"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a five-card poker hand with a pair, similar to ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
             f'the {draw4[0]} of {draw4[1]}, and ' +
-            f'the {draw5[0]} of {draw5[1]}?'
+            f'the {draw5[0]} of {draw5[1]}.'
         )
         q.answer = ONE_PAIR
         q.difficulty = 2
@@ -187,7 +187,7 @@ def twoPair(deck, nQuestions=1):
         q = Question()
         q.name = "Two Pair"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a five-card poker hand and getting 2 pair like ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -253,7 +253,7 @@ def threeOfAKind(deck, nQuestions=1):
         q = Question()
         q.name = "Three of a Kind"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a five-card poker hand and getting 3 of a kind? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -296,7 +296,6 @@ def fourOfAKind(deck, nQuestions=1):
             usedDeck[quadIndices[1]],
             usedDeck[quadIndices[2]],
             usedDeck[quadIndices[3]],
-            usedDeck[randomCard1],
         ])
 
         if(not hand in hands):
@@ -309,7 +308,6 @@ def fourOfAKind(deck, nQuestions=1):
         draw2 = vals[1]
         draw3 = vals[2]
         draw4 = vals[3]
-        draw5 = vals[4]
 
         q = Question()
         q.name = "Four of a Kind"
@@ -317,9 +315,9 @@ def fourOfAKind(deck, nQuestions=1):
             f'What are the chances of drawing a five-card poker hand with ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
-            f'the {draw3[0]} of {draw3[1]}, ' +
-            f'the {draw4[0]} of {draw4[1]}, and ' +
-            f'the {draw5[0]} of {draw5[1]}?'
+            f'the {draw3[0]} of {draw3[1]}, and ' +
+            f'the {draw4[0]} of {draw4[1]}?'
+            # i just removed this one, and changed answer to reflect specific 4 of a kind
         )
         q.answer = FOUR_KIND
         q.difficulty = 4
@@ -381,12 +379,12 @@ def straight(deck, nQuestions=1):
         q = Question()
         q.name = "Straight"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a five-card poker hand and getting a straight?  For exampple: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
             f'the {draw4[0]} of {draw4[1]}, and ' +
-            f'the {draw5[0]} of {draw5[1]}?'
+            f'the {draw5[0]} of {draw5[1]}.'
         )
         q.answer = STRAIGHT
         q.difficulty = 5
@@ -440,7 +438,7 @@ def straightFlush(deck, nQuestions=1):
         q = Question()
         q.name = "Straight Flush"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of getting a straight flush when drawing a five-card poker hand? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -548,12 +546,12 @@ def flush(deck, nQuestions=1):
         q = Question()
         q.name = "Flush"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a flush with a five-card poker hand?  Similar to: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
             f'the {draw4[0]} of {draw4[1]}, and ' +
-            f'the {draw5[0]} of {draw5[1]}?'
+            f'the {draw5[0]} of {draw5[1]}'
         )
         q.answer = FLUSH
         q.difficulty = 6
@@ -604,7 +602,7 @@ def royalFlush(deck, nQuestions=1):
         q = Question()
         q.name = "Royal Flush"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand as a percentage with ' +
+            f'What are the chances of drawing a five-card poker hand with ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -665,12 +663,12 @@ def fullHouse(deck, nQuestions=1):
         q = Question()
         q.name = "Full House"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a five-card poker hand and getting a full house?  For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
             f'the {draw4[0]} of {draw4[1]}, and ' +
-            f'the {draw5[0]} of {draw5[1]}?'
+            f'the {draw5[0]} of {draw5[1]}.'
         )
         q.answer = FULL_HOUSE
         q.difficulty = 5

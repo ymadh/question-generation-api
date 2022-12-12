@@ -121,6 +121,6 @@ def singleQuestion(request):
     question = Question.objects.all()[random_index]
     print(question)
     print(question.questionText)
-    questionParts = {"name": question.name, "question": question.questionText, "answer": question.answer}
+    questionParts = {"name": question.name, "question": question.questionText, "answer": question.answer, "difficulty": question.difficulty}
     context = {'data': {"singleQuestion": True, "question": questionParts}}
     return render(request, "index.html", context)

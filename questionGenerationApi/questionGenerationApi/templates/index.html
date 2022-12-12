@@ -27,7 +27,7 @@
       Click the "Generate" button below to generate questions if this is your
       first time using the system.
     </h3>
-    <p>Each button press generates 292 questions.</p>
+    <p>Generates 292 questions per button click.</p>
     <a href="http://localhost:8000/generate">
       <button class="button" id="genButton">Generate</button>
     </a>
@@ -38,17 +38,18 @@
     {% if data.dbClear == True %}
     <p>Database cleared</p>
     {% else %}
-    <h3>
+    <h4>
       If you want to start over you may clear the database and generate new
       questions
-    </h3>
+    </h4>
     <a href="http://localhost:8000/clearDatabase" target="_self">
       <button class="button" id="clearDb">Delete all questions in DB</button>
     </a>
     {% endif %} {% if data.firstTime != True %}
-    <p>How many questions would you like to retrieve</p>
     <br />
     <form class="inputs" action="/returnQuestions/">
+      <label><strong>How many questions would you like to retrieve</strong></label>
+      <br />
       <label>Maximum level of difficulty 1-6 (1 easy, 6 hard)</label>
       <input type="number" name="difficulty" id="numQs" min="1" max="6" value ="1" oninput="validity.valid||(value='');"/>
       <br />
@@ -57,15 +58,17 @@
       <input class="button" type="submit" value="Get Questions" />
     </form>
     <br />
-    <p>View a single random question with answer</p>
+    <h4>View a single random question with answer</h4>
     <a href="http://localhost:8000/singleQuestion" target="_self">
       <button class="button" id="View Single Question">View question</button>
     </a>
     {% else %}
     <h2>You must generate questions to begin</h2>
     {% endif %} {% if data.singleQuestion == True %}
+
     <div id="singleQBox">
         <p>Question Type: {{ data.question.name }}</p>
+        <p>Question Difficulty: {{ data.question.difficulty }}</p>
         <p>Question Text:</p>
         <div class="questionTextCopyBlock">
             <a href-="#" onclick="CopyToClipboard('questionText'); return false">
@@ -81,6 +84,7 @@
             <p id="answer">{{ data.question.answer }}</p>
         </div>
     </div>
+
     {% endif %}
   </body>
 </html>
