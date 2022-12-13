@@ -138,7 +138,6 @@ def atLeastOneValueInHand(deck, nQuestions=1):
             f'What is the probability that a five-card poker hand contains at least one {card[0]} card?'
         )
         q.answer = 18472/54145
-        q.answer = 1/13
         q.difficulty = 5
         q.numInputs = 0
         saveNewQuestion(q)  

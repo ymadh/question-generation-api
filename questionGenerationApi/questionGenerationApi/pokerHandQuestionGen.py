@@ -2,21 +2,40 @@ from .models import Question
 import random
 from .utils import saveNewQuestion
 
-# These are the hard-coded probabilities for each poker hand type.
-ROYAL_FLUSH = 0.00015
-STRAIGHT_FLUSH = 0.00000033 # updated to show answer for 1 specifically suited royal flush
-FOUR_KIND = 0.000018
-FULL_HOUSE = 0.0014
-FLUSH = 0.002
-STRAIGHT = 0.004
-THREE_KIND = 0.0035
-TWO_PAIR = 0.05
-ONE_PAIR = 0.42
-HIGH_CARD = 0.50
+# These are the hard-coded probabilities for each poker hand type that are in decimal form, not percentages.
+# calcAllPossible(): comb(52, 5) or 2,598,960 
+
+# (comb(4, 1))/calcAllPossible()
+ROYAL_FLUSH = 1.5390771693292702e-06
+
+#((comb(10, 1) * comb(4, 1)) - comb(4, 1))/calcAllPossible()
+STRAIGHT_FLUSH = 1.3851694523963431e-05
+
+# (comb(13, 1) * comb(4, 4) * comb(12, 1) * comb(4, 1))/calcAllPossible()
+FOUR_KIND = 0.00024009603841536616
+
+# (comb(13, 1) * comb(4, 3) * comb(12, 1) * comb(4, 2))/calcAllPossible()
+FULL_HOUSE = 0.0014405762304921968
+
+# ((comb(13, 5) * comb(4, 1)) - (comb(10, 1) * comb(4, 1)))/calcAllPossible()
+FLUSH = 0.001965401545233478
+
+# ((comb(10, 1) * pow(comb(4, 1), 5)) -  (comb(10, 1) * comb(4, 1)))/calcAllPossible()
+STRAIGHT = 0.003924646781789639
+
+# (comb(13, 1) * comb(4, 3) * comb(11, 1) * pow(comb(4, 1), 2))/calcAllPossible()
+THREE_KIND = 0.0035214085634253703
+
+# (comb(13, 2) * pow(comb(4, 2), 2) * comb(11, 1) * comb(4, 1))/calcAllPossible()
+TWO_PAIR = 0.0475390156062425
+
+# (calcTwoOfAKind())/calcAllPossible()
+ONE_PAIR = 1.625915857154571e-07
+
+# ((comb(13, 5) - comb(10, 1)) * (pow(comb(4, 1), 5) - comb(4, 1)))/calcAllPossible()
+HIGH_CARD = 0.5011773940345369
 
 # HIGH CARD START
-
-
 def highCard(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 1302540):
@@ -57,7 +76,7 @@ def highCard(deck, nQuestions=1):
         q = Question()
         q.name = "High Card"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand where your best hand is a high card? For example: ' +
+            f'What are the chances of drawing a five-card poker hand that is a high card (no pair)? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -71,8 +90,6 @@ def highCard(deck, nQuestions=1):
 # HIGH CARD END
 
 # ONE PAIR START
-
-
 def onePair(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 1098240):
@@ -122,7 +139,7 @@ def onePair(deck, nQuestions=1):
         q = Question()
         q.name = "One Pair"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with a pair, similar to ' +
+            f'What are the chances of drawing a five-card poker hand that is a one pair? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -135,7 +152,7 @@ def onePair(deck, nQuestions=1):
         saveNewQuestion(q)
 # ONE PAIR END
 
-
+# TWO PAIR START
 def twoPair(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 123552):
@@ -187,7 +204,7 @@ def twoPair(deck, nQuestions=1):
         q = Question()
         q.name = "Two Pair"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand and getting 2 pair like ' +
+            f'What are the chances of drawing a five-card poker hand that is a two pair? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -201,8 +218,6 @@ def twoPair(deck, nQuestions=1):
 # TWO PAIR END
 
 # THREE OF A KIND START
-
-
 def threeOfAKind(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 54912):
@@ -253,7 +268,7 @@ def threeOfAKind(deck, nQuestions=1):
         q = Question()
         q.name = "Three of a Kind"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand and getting 3 of a kind? For example: ' +
+            f'What are the chances of drawing a five-card poker hand that is a three of a kind? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -266,7 +281,7 @@ def threeOfAKind(deck, nQuestions=1):
         saveNewQuestion(q)
 # THREE OF A KIND END
 
-
+# FOUR OF A KIND START
 def fourOfAKind(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 624):
@@ -312,7 +327,7 @@ def fourOfAKind(deck, nQuestions=1):
         q = Question()
         q.name = "Four of a Kind"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a five-card poker hand that is a four of a kind? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, and ' +
@@ -326,8 +341,6 @@ def fourOfAKind(deck, nQuestions=1):
 # FOUR OF A KIND END
 
 # STRAIGHT START
-
-
 def straight(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 10200):
@@ -379,7 +392,7 @@ def straight(deck, nQuestions=1):
         q = Question()
         q.name = "Straight"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand and getting a straight?  For exampple: ' +
+            f'What are the chances of drawing a five-card poker hand that is a straight?  For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -393,8 +406,6 @@ def straight(deck, nQuestions=1):
 # STRAIGHT END
 
 # STRAIGHT FLUSH START
-
-
 def straightFlush(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 36):
@@ -438,7 +449,7 @@ def straightFlush(deck, nQuestions=1):
         q = Question()
         q.name = "Straight Flush"
         q.questionText = (
-            f'What are the chances of getting a straight flush when drawing a five-card poker hand? For example: ' +
+            f'What are the chances of drawing a five-card poker hand that is a straight flush? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -455,7 +466,6 @@ def straightFlush(deck, nQuestions=1):
 ''' HELPER START '''
 # To help detect straight in flush function. This will be used using the indices in SpadesIndices
 # There's a defect where 0 is not accounted for, so there's a fix for that
-
 
 def isConsecutive(input):
     nums = []
@@ -483,8 +493,6 @@ def isConsecutive(input):
 ''' HELPER END '''
 
 # FLUSH START
-
-
 def flush(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 5108):
@@ -546,7 +554,7 @@ def flush(deck, nQuestions=1):
         q = Question()
         q.name = "Flush"
         q.questionText = (
-            f'What are the chances of drawing a flush with a five-card poker hand?  Similar to: ' +
+            f'What are the chances of drawing five-card poker hand that is a flush? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -560,8 +568,6 @@ def flush(deck, nQuestions=1):
 # FLUSH END
 
 # ROYAL FLUSH START
-
-
 def royalFlush(deck, nQuestions=1):
     counter = nQuestions
     if(counter > 4):
@@ -602,7 +608,7 @@ def royalFlush(deck, nQuestions=1):
         q = Question()
         q.name = "Royal Flush"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand with ' +
+            f'What are the chances of drawing a five-card poker hand with a royal flush? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
@@ -663,7 +669,7 @@ def fullHouse(deck, nQuestions=1):
         q = Question()
         q.name = "Full House"
         q.questionText = (
-            f'What are the chances of drawing a five-card poker hand and getting a full house?  For example: ' +
+            f'What are the chances of drawing a five-card poker hand that is a full house? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
             f'the {draw2[0]} of {draw2[1]}, ' +
             f'the {draw3[0]} of {draw3[1]}, ' +
