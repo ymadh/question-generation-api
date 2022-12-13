@@ -35,7 +35,7 @@ def notContainsCardInHand(deck, nQuestions=1):
             counter -= 1
             
             q = Question()
-            q.name = "Not Contain Cards in Poker Hand"
+            q.name = "General Poker Hand Questions Set: Not Contain Cards in Poker Hand"
             q.questionText = question
             q.answer = 1 - comb(52-(5-n), 5-(5-n))/comb(52,5)
             q.difficulty = 5
@@ -76,7 +76,7 @@ def containCardsInHand(deck, nQuestions=1):
             counter -= 1
             
             q = Question()
-            q.name = "Contains Cards in Poker Hand"
+            q.name = "General Poker Hand Questions Set: Contains Cards in Poker Hand"
             q.questionText = question
             q.answer = comb(52-n, 5-n)/comb(52,5)
             q.difficulty = 5
@@ -103,7 +103,7 @@ def exactlyOneValueInHand(deck, nQuestions=1):
         card = usedDeck[index]
         
         q = Question()
-        q.name = 'Exactly One Value in Poker Hand'
+        q.name = 'General Poker Hand Questions Set: Exactly One Value in Poker Hand'
         q.questionText = (    
             f'What is the probability that a five-card poker hand contains exactly one {card[0]} card?'
         )
@@ -133,7 +133,7 @@ def atLeastOneValueInHand(deck, nQuestions=1):
         card = usedDeck[index]
         
         q = Question()
-        q.name = 'Exactly One Value in Poker Hand'
+        q.name = 'General Poker Hand Questions Set: Exactly One Value in Poker Hand'
         q.questionText = (    
             f'What is the probability that a five-card poker hand contains at least one {card[0]} card?'
         )

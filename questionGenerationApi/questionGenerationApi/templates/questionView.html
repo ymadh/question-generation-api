@@ -14,9 +14,11 @@
     <ol>
       {% for i in list %}
       <li class="questionTextCopyBlockPage">
-        <p>Question Name: {{ i.name }}</p>
-        <p>{{ i.questionText }}</p>
-        {{ i.answer }}
+        <p>
+          Question Name: {{ i.name }} <br/><br/> 
+          {{ i.questionText }} <br/><br/>
+          Answer: {{ i.answer }}
+        </p>
       </li>
       {% endfor %}
     </ol>

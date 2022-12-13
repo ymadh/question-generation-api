@@ -74,7 +74,7 @@ def highCard(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "High Card"
+        q.name = "Poker Questions Set: High Card"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand that is a high card (no pair)? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -137,7 +137,7 @@ def onePair(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "One Pair"
+        q.name = "Poker Questions Set: One Pair"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand that is a one pair? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -202,7 +202,7 @@ def twoPair(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "Two Pair"
+        q.name = "Poker Questions Set: Two Pair"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand that is a two pair? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -266,7 +266,7 @@ def threeOfAKind(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "Three of a Kind"
+        q.name = "Poker Questions Set: Three of a Kind"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand that is a three of a kind? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -325,7 +325,7 @@ def fourOfAKind(deck, nQuestions=1):
         draw4 = vals[3]
 
         q = Question()
-        q.name = "Four of a Kind"
+        q.name = "Poker Questions Set: Four of a Kind"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand that is a four of a kind? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -390,7 +390,7 @@ def straight(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "Straight"
+        q.name = "Poker Questions Set: Straight"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand that is a straight?  For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -447,7 +447,7 @@ def straightFlush(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "Straight Flush"
+        q.name = "Poker Questions Set: Straight Flush"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand that is a straight flush? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -552,7 +552,7 @@ def flush(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "Flush"
+        q.name = "Poker Questions Set: Flush"
         q.questionText = (
             f'What are the chances of drawing five-card poker hand that is a flush? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -606,7 +606,7 @@ def royalFlush(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "Royal Flush"
+        q.name = "Poker Questions Set: Royal Flush"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand with a royal flush? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +
@@ -667,7 +667,7 @@ def fullHouse(deck, nQuestions=1):
         draw5 = vals[4]
 
         q = Question()
-        q.name = "Full House"
+        q.name = "Poker Questions Set: Full House"
         q.questionText = (
             f'What are the chances of drawing a five-card poker hand that is a full house? For example: ' +
             f'the {draw1[0]} of {draw1[1]}, ' +

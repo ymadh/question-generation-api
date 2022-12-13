@@ -27,7 +27,7 @@
       Click the "Generate" button below to generate questions if this is your
       first time using the system.
     </h3>
-    <p>Generates 292 questions per button click.</p>
+    <p>Generates 390 questions per button click.</p>
     <a href="http://localhost:8000/generate">
       <button class="button" id="genButton">Generate</button>
     </a>
@@ -67,9 +67,10 @@
     {% endif %} {% if data.singleQuestion == True %}
 
     <div id="singleQBox">
-        <p>Question Type: {{ data.question.name }}</p>
-        <p>Question Difficulty: {{ data.question.difficulty }}</p>
-        <p>Question Text:</p>
+        <p>
+          Question Type: {{ data.question.name }}<br/>
+          Question Difficulty: {{ data.question.difficulty }} <br/>
+          Question Text:</p>
         <div class="questionTextCopyBlock">
             <a href-="#" onclick="CopyToClipboard('questionText'); return false">
                 <button class="button">Copy Question Text</button>

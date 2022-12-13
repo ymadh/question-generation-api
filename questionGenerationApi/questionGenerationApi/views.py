@@ -69,22 +69,22 @@ def generate(request):
     # Ex: royalFlush(deck, 7) only generates 4 questions as there are only 4
     # possible.
 
-    highCard(deck, 3)
-    onePair(deck, 3)
-    twoPair(deck, 3)
-    threeOfAKind(deck, 3)
-    fourOfAKind(deck, 3)
-    straight(deck, 3)
-    straightFlush(deck, 3)
-    flush(deck, 3)
-    royalFlush(deck, 3)
-    fullHouse(deck, 3)
+    highCard(deck, 10)
+    onePair(deck, 10)
+    twoPair(deck, 10)
+    threeOfAKind(deck, 10)
+    fourOfAKind(deck, 10)
+    straight(deck, 10)
+    straightFlush(deck, 10)
+    flush(deck, 10)
+    royalFlush(deck, 10)
+    fullHouse(deck, 10)
 
     '''Generic Hand Questions'''
-    notContainsCardInHand(deck, 3)
-    containCardsInHand(deck, 3)
-    exactlyOneValueInHand(deck, 3)
-    atLeastOneValueInHand(deck, 3)
+    notContainsCardInHand(deck, 10)
+    containCardsInHand(deck, 10)
+    exactlyOneValueInHand(deck, 10)
+    atLeastOneValueInHand(deck, 10)
 
     context = {"generated": True}
     return render(request, "index.html", context=context)
