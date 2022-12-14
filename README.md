@@ -1,39 +1,67 @@
-# question-generation-api
+# Question Geeneration API for Standard 52 Card Deck
+The main focus of this project is to develop an API for generating questions for Probability for a stndard 52 Card Deck. We bundled in some questions from basic probability to probability with combinations using 5-card Poker hands.
 
-make sure to use a virtual env
-you must pip install django
+## How to setup:
+### Method 1 using Pip
+Make sure to use a virtual environment. You must pip install django.
 
-This is what is installed in my venv:
+This is what is installed in our virtual environment:
 I only had to use pip install for `Django` and `djangorestframework`
 which you should be able to install using:
-`pip install -r requirements.txt`
-asgiref           3.5.2
-Django            3.2.16
-djangorestframework 3.14.0
-pip               22.1
-pytz              2022.6
-setuptools        62.2.0
-sqlparse          0.4.3
-typing_extensions 4.4.0
-wheel             0.37.1
+`pip install -r requirements.txt` <br/>
+asgiref           3.5.2 <br/>
+Django            3.2.16 <br/>
+djangorestframework 3.14.0 <br/>
+pip               22.1 <br/>
+pytz              2022.6 <br/>
+setuptools        62.2.0 <br/>
+sqlparse          0.4.3 <br/>
+typing_extensions 4.4.0 <br/>
+wheel             0.37.1 <br/>
 
-I have had to run this when i go to run my server.  If you are working in multiple contexts, you may need to set this variable as well.
+### Method 2 using Anaconda
+This approach is for those who have Python set up using Anaconda. In the Environment folder, the Anaconda environment file to install from is `qa-gen-py10-env.yml`. To install it open the Anaconda Prompt, cd to the directory where `qa-gen-py10-env.yml` is and create a virtual environment using this commanbd  `conda env create -f qa-gen-py10-env.yml`. To activate the environment, use command `conda activate qa-gen-py10-env.yml` and you're set to go. To run the Django server, you'll need to use the Anaconda Prompt.
+
+## Running the Django Server
+
+### First Time Running
+If you are working in multiple contexts, you may need to set this variable as well. <br/>
 `export DJANGO_SETTINGS_MODULE=questionGenerationApi.settings`
 
 You may have to run migrations with `python manage.py migrate`
 
-If you make amy change to the model for 'Questions' or add ny additional models, you will have to run `python manage.py makemigrations` then migrate them with the cmmand above.
+### After Initial Setup
+If you make any changes to the model for 'Questions' or add ny additional models, you will have to run `python manage.py make migrations` then migrate them with the cmmand above.
 
-#Create a Super User for the admin/db interfaces
+#### Create a Super User for the admin/db interfaces
 `python manage.py createsuperuser`
 
-#Go here to see admin and db data after you run:
+#### Go here to see admin and db data after you run:
 `python manage.py runserver`
 http://127.0.0.1:8000/admin/
 
-Check out the API Here:
+#### Check out the API Here:
 http://127.0.0.1:8000/questions/
 if your server is up and running this should take you to an API Root page
 
-
 Endpoint Example: `http://localhost:8000/returnQuestions/5/?difficulty=3`
+
+#### To go to our question generation API demonstration page:
+`http://localhost:8000/generate`
+
+## Files Containing Functions for Generating Each Question Type:
+If you wish to make your own API, here are the files containing the functions used for the question generation:
+- `utils.py` - Contains question generation for basic probability and some Poker hands.
+- `pokerHandQuestionGen.py` - Is a dedicated file for generating questions for each Poker Hand. These functions are capable of creating bulks of n<={Max Possible for Hand Type} 
+- `genericHandQuestionGen.py` Is a dedicated file for generating generic questions. These functions are capable of creating n<={Max Possible}. Some functions don't have a known limit, so they're unrestricted. An indication of surpassing that unknown limit is when an infinite loop occurs.
+
+For example usage, see `views.py`
+
+## What Could be Improved:
+- Create more API endpoints for a more barebone experience.
+- Make questions more variable, add types of questions then generate hands
+- Add multiple choice answers
+- Add a quiz interface
+- Add a way to display the formula used to determine the answer
+- A feature where you can turn on/off question types/difficulty when generating 
+- Create a better dashboard using React
