@@ -55,10 +55,35 @@ If you wish to make your own API, here are the files containing the functions us
 - `pokerHandQuestionGen.py` - Is a dedicated file for generating questions for each Poker Hand. These functions are capable of creating bulks of n<={Max Possible for Hand Type} 
 - `genericHandQuestionGen.py` Is a dedicated file for generating generic questions. These functions are capable of creating n<={Max Possible}. Some functions don't have a known limit, so they're unrestricted. An indication of surpassing that unknown limit is when an infinite loop occurs.
 
-For example usage, see `views.py`
+For example usage, see `views.py::generate`
 
+This method calls each "hand" type and has two types of algorithms.  The first is to iterate over a deck of cards and generate hands that represent the question. IE  fullhouse(deck) might return a question with AAAQQ. The second method is to generate random hands, and store them in a set for uniqueness. In order to remove the database, each method could simply return a question and the "generate" method would be randomized in terms of which type of hand should be generated based on difficulty.
+
+Difficulty is manually set as are answers. If the program is converted to using an actual math formula, the difficulty could be derived from that formula.  These are both set in the methods such as fullhouse() which is located in utils.py
+
+There are api endpoints to return questions and these could be used with any front end.  Our initial thought was to return N questions with up to X difficulty. The questions returned are randomized from the database. 
+
+
+## Endpoints ##:
+admin/
+  the super user can login and create / delete / edit data from the db
+generate/
+  populate the db
+returnQuestions/
+  arguments _GET:
+     numQuestions: int
+     difficulty: int
+gui/
+  the html template for generating / clearing / viewing questions
+clearDatabase/
+   reset the db
+singleQuestion/
+   returns a single question of any difficulty
+   
+   
 ## What Could be Improved:
 - Create more API endpoints for a more barebone experience.
+- remove the database and randomize the question returns
 - Make questions more variable, add types of questions then generate hands
 - Add multiple choice answers
 - Add a quiz interface
