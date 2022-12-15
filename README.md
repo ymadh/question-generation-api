@@ -1,4 +1,4 @@
-# Question Geeneration API for Standard 52 Card Deck
+# Question Generation API for Standard 52 Card Deck
 The main focus of this project is to develop an API for generating questions for Probability for a stndard 52 Card Deck. We bundled in some questions from basic probability to probability with combinations using 5-card Poker hands.
 
 ## How to setup:
