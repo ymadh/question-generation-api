@@ -65,20 +65,20 @@ There are api endpoints to return questions and these could be used with any fro
 
 
 ## Endpoints ##:
-admin/
-  the super user can login and create / delete / edit data from the db
-generate/
-  populate the db
-returnQuestions/
-  arguments _GET:
-     numQuestions: int
-     difficulty: int
-gui/
-  the html template for generating / clearing / viewing questions
-clearDatabase/
-   reset the db
-singleQuestion/
-   returns a single question of any difficulty
+admin/<br/>
+  the super user can login and create / delete / edit data from the db<br/><br/>
+generate/<br/>
+  populate the db<br/><br/>
+returnQuestions/<br/>
+  arguments _GET:<br/>
+     numQuestions: int<br/>
+     difficulty: int<br/><br/>
+gui/><br/>
+  the html template for generating / clearing / viewing questions><br/>><br/>
+clearDatabase/><br/>
+   reset the db><br/>><br/>
+singleQuestion/><br/>
+   returns a single question of any difficulty><br/>><br/>
    
    
 ## What Could be Improved:
