@@ -4,6 +4,7 @@ The main focus of this project is to develop an API for generating questions for
 ## How to setup:
 ### Method 1 using Pip
 Make sure to use a virtual environment. You must pip install django.
+`https://docs.python.org/3/library/venv.html`
 
 This is what is installed in our virtual environment:
 I only had to use pip install for `Django` and `djangorestframework`
@@ -31,7 +32,7 @@ If you are working in multiple contexts, you may need to set this variable as we
 You may have to run migrations with `python manage.py migrate`
 
 ### After Initial Setup
-If you make any changes to the model for 'Questions' or add ny additional models, you will have to run `python manage.py make migrations` then migrate them with the cmmand above.
+If you make any changes to the model for 'Questions' or add ny additional models, you will have to run `python manage.py make migrations` then migrate them with the command above.
 
 #### Create a Super User for the admin/db interfaces
 `python manage.py createsuperuser`
@@ -48,6 +49,9 @@ Endpoint Example: `http://localhost:8000/returnQuestions/5/?difficulty=3`
 
 #### To go to our question generation API demonstration page:
 `http://localhost:8000/generate`
+
+#### To go to our dashboard page:
+`http://localhost:8000/gui`
 
 ## Files Containing Functions for Generating Each Question Type:
 If you wish to make your own API, here are the files containing the functions used for the question generation:
