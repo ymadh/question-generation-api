@@ -73,12 +73,12 @@ returnQuestions/<br/>
   arguments _GET:<br/>
      numQuestions: int<br/>
      difficulty: int<br/><br/>
-gui/><br/>
-  the html template for generating / clearing / viewing questions><br/>><br/>
-clearDatabase/><br/>
-   reset the db><br/>><br/>
-singleQuestion/><br/>
-   returns a single question of any difficulty><br/>><br/>
+gui/<br/>
+  the html template for generating / clearing / viewing questions<br/><br/>
+clearDatabase/<br/>
+   reset the db<br/><br/>
+singleQuestion/<br/>
+   returns a single question of any difficulty<br/><br/>
    
    
 ## What Could be Improved:
